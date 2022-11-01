@@ -1,10 +1,11 @@
 import { useHandleInput, useOpen, useStorageStore } from "@/hooks/util";
 import { checkPathItem, fetchFileList } from "@/util/tencent";
-import { Button, TextInput } from "@mantine/core";
+import { ActionIcon, Button, TextInput } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useRequest } from "ahooks";
 import React, { Suspense, useEffect } from "react";
 import { useSnapshot } from "valtio";
+import Icon from "../util/Icon";
 import { FileFormDataState, FileListState } from "./fileState";
 
 const AddDialog = React.lazy(() => import("./AddDialog"));
@@ -59,13 +60,9 @@ const SearchForm: React.FC = () => {
         error={error}
       />
 
-      <Button
-        leftIcon={<i className="ti ti-circle-plus"></i>}
-        color="green"
-        onClick={onOpen}
-      >
-        新增
-      </Button>
+      <ActionIcon color="green" onClick={onOpen} size="lg" variant="filled">
+        <Icon icon="plus" />
+      </ActionIcon>
       <Suspense>
         <AddDialog open={open} onClose={onClose} />
       </Suspense>

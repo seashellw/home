@@ -5,6 +5,7 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
+import { NavigationProgress } from "@mantine/nprogress";
 import { useLocalStorageState } from "ahooks";
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
 
@@ -75,6 +76,7 @@ const Provider: React.FC<PropsWithChildren> = ({ children }) => {
           colorScheme,
         }}
       >
+        <NavigationProgress />
         <NotificationsProvider>{children}</NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>

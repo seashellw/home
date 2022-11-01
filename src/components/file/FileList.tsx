@@ -49,12 +49,11 @@ const Tree: React.FC<
             sx={{ width: "calc(100% - 10px)" }}
             className="inline-flex items-center gap-2 my-[3px]"
           >
-            <Icon
-              icon={item.isDir ? "folder" : "circle-dot"}
-              color={item.isDir ? "#FCC419" : "#339AF0"}
-            />
             <ActionIcon onClick={() => onContext?.(item)}>
-              <Icon icon="menu-2" />
+              <Icon
+                icon={item.isDir ? "folder" : "circle-dot"}
+                color={item.isDir ? "#FCC419" : "#339AF0"}
+              />
             </ActionIcon>
             {item.isDir ? (
               <span className="truncate">{item.name}</span>

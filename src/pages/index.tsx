@@ -1,6 +1,7 @@
 import AppHeader from "@/components/layouts/AppHeader";
 import AppNavbar from "@/components/layouts/AppNavbar";
 import Provider from "@/components/layouts/Provider";
+import Fallback from "@/components/util/Fallback";
 import { useAutoLogIn } from "@/hooks/user";
 import { AppShell } from "@mantine/core";
 import React, { Suspense } from "react";
@@ -17,7 +18,7 @@ function App() {
         header={<AppHeader />}
         navbar={<AppNavbar />}
       >
-        <Suspense>
+        <Suspense fallback={<Fallback />}>
           <Outlet />
         </Suspense>
       </AppShell>
