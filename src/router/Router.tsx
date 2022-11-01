@@ -8,15 +8,15 @@ const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: h(() => import("@/pages")),
+      element: h(() => import("@/pages/App")),
       children: [
         {
           index: true,
-          element: h(() => import("@/pages/home")),
+          element: h(() => import("@/pages/home/Home")),
         },
         {
           path: "/fileSystem",
-          element: h(() => import("@/pages/fileSystem")),
+          element: h(() => import("@/pages/fileSystem/FileSystem")),
         },
       ],
     },

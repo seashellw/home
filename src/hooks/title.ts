@@ -1,4 +1,4 @@
-import { menu } from "@/router";
+import { menu } from "@/router/Router";
 import { useTitle } from "ahooks";
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";

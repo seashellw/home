@@ -1,5 +1,5 @@
 import { useWatch } from "@/hooks/util";
-import { menu } from "@/router";
+import { menu } from "@/router/Router";
 import { Divider, Navbar, NavLink, ScrollArea } from "@mantine/core";
 import React, { Suspense } from "react";
 import { Link, useLocation } from "react-router-dom";

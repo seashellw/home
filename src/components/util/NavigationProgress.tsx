@@ -5,7 +5,7 @@ import {
 } from "@mantine/nprogress";
 import React, { useEffect } from "react";
 
-const Fallback: React.FC = () => {
+const NavigationProgress: React.FC = () => {
   useEffect(() => {
     resetNavigationProgress();
     startNavigationProgress();
@@ -16,4 +16,4 @@ const Fallback: React.FC = () => {
   return <></>;
 };
 
-export default React.memo(Fallback);
+export default React.memo(NavigationProgress);
