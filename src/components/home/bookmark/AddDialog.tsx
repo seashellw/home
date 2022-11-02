@@ -1,6 +1,5 @@
-import { useWatch } from "@/hooks/util";
+import { useStateForm } from "@/hooks/util";
 import { Button, Modal, TextInput } from "@mantine/core";
-import { useForm } from "@mantine/form";
 import React, { useCallback, useState } from "react";
 import { useSnapshot } from "valtio";
 import { ActionType, BookMarkState, useBookmarkAction } from "./bookmarkState";
@@ -8,10 +7,7 @@ import { ActionType, BookMarkState, useBookmarkAction } from "./bookmarkState";
 const AddDialog: React.FC = () => {
   const { fetchAdd, fetchUpdate, fetchDelete } = useBookmarkAction();
 
-  const form = useForm({
-    initialValues: {
-      ...BookMarkState.item,
-    },
+  const form = useStateForm(BookMarkState.item, {
     validate(values) {
       return {
         url: values.url ? undefined : "请输入URL",
@@ -20,19 +16,9 @@ const AddDialog: React.FC = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-
   const { open, type } = useSnapshot(BookMarkState);
 
-  useWatch(open, (open) => {
-    if (open) {
-      form.setValues({
-        ...BookMarkState.item,
-      });
-    }
-  });
-
-  const handleSave = form.onSubmit(async (values) => {
-    BookMarkState.item = values;
+  const handleSave = form.onSubmit(async () => {
     setIsLoading(true);
     switch (BookMarkState.type) {
       case ActionType.Add:
@@ -60,7 +46,7 @@ const AddDialog: React.FC = () => {
       title={type === ActionType.Add ? "新增书签" : "编辑书签"}
       closeOnClickOutside={false}
     >
-      <form onSubmit={handleSave} >
+      <form onSubmit={handleSave}>
         <TextInput label="标题" {...form.getInputProps("title")} mb="sm" />
         <TextInput label="链接" {...form.getInputProps("url")} mb="lg" />
         <Button

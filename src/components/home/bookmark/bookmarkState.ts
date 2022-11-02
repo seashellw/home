@@ -16,10 +16,15 @@ export const enum ActionType {
 export const BookMarkState = proxy<{
   open: boolean;
   type: ActionType;
-  item?: Partial<BookmarkItem>;
+  item: BookmarkItem;
 }>({
   open: false,
   type: ActionType.Add,
+  item: {
+    id: "",
+    title: "",
+    url: "",
+  },
 });
 
 export interface BookmarkItem {

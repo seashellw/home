@@ -1,9 +1,9 @@
-import { useMount } from "ahooks";
+import { useOnMount } from "@/hooks/util";
 import React, { useRef } from "react";
 
 const ShiCi: React.FC = () => {
   const first = useRef(true);
-  useMount(() => {
+  useOnMount(() => {
     if (first.current) {
       const id = "jinrishici-script";
       let old = document.querySelector("#" + id);

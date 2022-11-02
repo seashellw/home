@@ -1,17 +1,28 @@
 import { useForm } from "@mantine/form";
 import { UseFormInput } from "@mantine/form/lib/types";
 import { useMediaQuery } from "@mantine/hooks";
-import { useLocalStorageState, useMemoizedFn, useMount } from "ahooks";
+import { useMemoizedFn } from "ahooks";
 import destr from "destr";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { equals } from "remeda";
 import { subscribe } from "valtio";
 
+export const useOnMount = (cb: () => (() => void) | void | Promise<void>) => {
+  const ref = useRef(cb);
+  ref.current = cb;
+  useEffect(() => {
+    let cb = ref.current();
+    if (cb instanceof Function) {
+      return cb;
+    }
+  }, []);
+};
+
 export function useIsMounted() {
   const [isMounted, setIsMounted] = useState(false);
-  useMount(() => {
+  useEffect(() => {
     setIsMounted(true);
-  });
+  }, []);
   return isMounted;
 }
 
@@ -39,21 +50,6 @@ export const useOpen = (initVal = false) => {
   );
 };
 
-/**
- * 第一次访问时调用
- */
-export const useFirstVisit = (cb: () => void) => {
-  const [isFirst, setIsFirst] = useLocalStorageState("isFirst", {
-    defaultValue: true,
-  });
-  useMount(() => {
-    if (isFirst) {
-      cb();
-      setIsFirst(false);
-    }
-  });
-};
-
 export const useHandleInput = (cb: (value: string) => void) =>
   useCallback(
     (e: any) => {
@@ -62,13 +58,13 @@ export const useHandleInput = (cb: (value: string) => void) =>
     [cb]
   );
 
-export const useWatch: <T>(value: T, cb: (value: T) => void) => void = (
-  value,
-  cb
-) => {
+export const useWatch: <T>(
+  value: T,
+  cb: (value: T) => (() => void) | void
+) => void = (value, cb) => {
   cb = useMemoizedFn(cb);
   useEffect(() => {
-    cb(value);
+    return cb(value);
   }, [cb, value]);
 };
 
@@ -76,16 +72,13 @@ export const useWatch: <T>(value: T, cb: (value: T) => void) => void = (
  * 存储valtio数据到本地
  */
 export const useStorageStore = (key: string, store: Object) => {
-  useEffect(() => {
+  useOnMount(() => {
     let data = localStorage.getItem(key);
     if (data) Object.assign(store, destr(data));
-    const unSub = subscribe(store, () => {
+    return subscribe(store, () => {
       localStorage.setItem(key, JSON.stringify(store));
     });
-    return () => {
-      unSub();
-    };
-  }, [key, store]);
+  });
 };
 
 export const useMinWidth = (width: number) =>
@@ -102,14 +95,12 @@ export const useStateForm = <T extends Object>(
   useWatch(formObj.values, (values) => {
     if (!equals(values, state)) Object.assign(state, values);
   });
-  useEffect(() => {
-    const unSub = subscribe(state, () => {
+  useWatch(state, (state) => {
+    if (!equals(state, formObj.values)) formObj.setValues(state);
+    return subscribe(state, () => {
       if (!equals(state, formObj.values)) formObj.setValues(state);
     });
-    return () => {
-      unSub();
-    };
-  }, []);
+  });
 
   return formObj;
 };

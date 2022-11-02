@@ -1,10 +1,13 @@
-import { fetchLogIn, fetchLogOut, fetchUser } from "@/interface/user/user";
-import { UserItem } from "@/interface/user/userList";
+import {
+  fetchLogIn,
+  fetchLogOut,
+  fetchUser,
+  UserItem,
+} from "@/interface/user/user";
 import { TOKEN_KEY } from "@/interface/util";
 import { showNotification } from "@mantine/notifications";
-import { useMount } from "ahooks";
 import { proxy } from "valtio";
-import { useStorageStore } from "./util";
+import { useOnMount, useStorageStore } from "./util";
 
 const logInURL = "https://seashellw.world/server/api/auth/logIn";
 const logOutURL = "https://seashellw.world/server/api/auth/logOut";
@@ -29,7 +32,7 @@ export const logOut = async () => {
 
 export const useAutoLogIn = () => {
   useStorageStore("LogInState", LogInState);
-  useMount(async () => {
+  useOnMount(async () => {
     let url = new URL(window.location.href);
     let params = url.searchParams;
     let token = params.get("token");

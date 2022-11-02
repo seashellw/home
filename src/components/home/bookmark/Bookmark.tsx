@@ -38,7 +38,11 @@ const Bookmark: React.FC = () => {
   const handleAdd = useCallback(() => {
     BookMarkState.open = true;
     BookMarkState.type = ActionType.Add;
-    BookMarkState.item = { title: "", url: "", id: "" };
+    BookMarkState.item = {
+      title: "",
+      url: "",
+      id: "",
+    };
   }, []);
 
   useStorageStore("BookMarkListState", BookMarkListState);

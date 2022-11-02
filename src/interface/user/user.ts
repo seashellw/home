@@ -1,6 +1,14 @@
 import { get } from "../fetch";
 import { TOKEN_KEY } from "../util";
-import { UserItem } from "./userList";
+
+export interface UserItem {
+  [key: string]: string | undefined;
+  id: string;
+  image: string;
+  name: string;
+  email: string;
+  authority?: string;
+}
 
 export const fetchUser = async () => {
   const res = await get<{
