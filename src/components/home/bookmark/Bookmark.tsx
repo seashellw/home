@@ -19,6 +19,7 @@ const ButtonItem: React.FC<{
     <Button
       component="a"
       variant="default"
+      target="_blank"
       href={item.url}
       key={item.id}
       onContextMenu={(e: React.MouseEvent) => {

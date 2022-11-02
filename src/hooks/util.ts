@@ -79,17 +79,17 @@ export const useWatch: <T>(value: T, cb: (value: T) => void) => void = (
  * 存储valtio数据到本地
  */
 export const useStorageStore = (key: string, store: Object) => {
-  let unSub = useRef(() => {});
-  useMount(() => {
+  useEffect(() => {
+    console.log(key, store);
     let data = localStorage.getItem(key);
     if (data) Object.assign(store, jsonParse(data));
-    unSub.current = subscribe(store, () => {
+    const unSub = subscribe(store, () => {
       localStorage.setItem(key, JSON.stringify(store));
     });
-  });
-  useUnmount(() => {
-    unSub.current();
-  });
+    return () => {
+      unSub();
+    };
+  }, [key, store]);
 };
 
 /**
