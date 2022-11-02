@@ -1,12 +1,9 @@
-import { jsonParse } from "@/interface/util";
+import { useForm } from "@mantine/form";
+import { UseFormInput } from "@mantine/form/lib/types";
 import { useMediaQuery } from "@mantine/hooks";
-import {
-  useLocalStorageState,
-  useMemoizedFn,
-  useMount,
-  useUnmount,
-} from "ahooks";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useLocalStorageState, useMemoizedFn, useMount } from "ahooks";
+import destr from "destr";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { equals } from "remeda";
 import { subscribe } from "valtio";
 
@@ -80,9 +77,8 @@ export const useWatch: <T>(value: T, cb: (value: T) => void) => void = (
  */
 export const useStorageStore = (key: string, store: Object) => {
   useEffect(() => {
-    console.log(key, store);
     let data = localStorage.getItem(key);
-    if (data) Object.assign(store, jsonParse(data));
+    if (data) Object.assign(store, destr(data));
     const unSub = subscribe(store, () => {
       localStorage.setItem(key, JSON.stringify(store));
     });
@@ -92,59 +88,28 @@ export const useStorageStore = (key: string, store: Object) => {
   }, [key, store]);
 };
 
-/**
- * 赋予表单数据本地存储的功能
- */
-export const useStorageForm: (
-  key: string,
-  form: {
-    values: Object;
-    setValues: (values: Object) => void;
-  }
-) => void = (key, form) => {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useMount(() => {
-    setIsMounted(true);
-    const storedValue = localStorage.getItem(key);
-    if (storedValue) {
-      try {
-        let str = localStorage.getItem(key);
-        if (!str) return;
-        form.setValues(JSON.parse(str));
-      } catch (e) {
-        console.log("读取表单数据失败", e);
-      }
-    }
-  });
-
-  useEffect(() => {
-    if (!isMounted) return;
-    localStorage.setItem(key, JSON.stringify(form.values));
-  }, [form.values, isMounted, key]);
-};
-
-/**
- * 同步两个对象。
- * 内部将进行深比较
- */
-export const useSync: <T extends Object>(
-  dataList: [T, T],
-  cbList: [(data: T) => void, (data: T) => void]
-) => void = (dataList, cbList) => {
-  const [a, b] = dataList;
-  const [setA, setB] = cbList;
-  useWatch(a, (a) => {
-    if (!equals(a, b)) {
-      setB(a);
-    }
-  });
-  useWatch(b, (b) => {
-    if (!equals(a, b)) {
-      setA(b);
-    }
-  });
-};
-
 export const useMinWidth = (width: number) =>
   useMediaQuery(`(min-width: ${width}px)`);
+
+export const useStateForm = <T extends Object>(
+  state: T,
+  from: UseFormInput<T>
+) => {
+  const formObj = useForm({
+    initialValues: { ...state },
+    ...from,
+  });
+  useWatch(formObj.values, (values) => {
+    if (!equals(values, state)) Object.assign(state, values);
+  });
+  useEffect(() => {
+    const unSub = subscribe(state, () => {
+      if (!equals(state, formObj.values)) formObj.setValues(state);
+    });
+    return () => {
+      unSub();
+    };
+  }, []);
+
+  return formObj;
+};

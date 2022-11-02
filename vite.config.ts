@@ -3,7 +3,6 @@ import { join, resolve } from "path";
 import { presetUno } from "unocss";
 import unocss from "unocss/vite";
 import { defineConfig } from "vite";
-import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,7 +11,6 @@ export default defineConfig({
       presets: [presetUno()],
     }),
     react(),
-    visualizer(),
   ],
   base: "/home/",
   build: {
