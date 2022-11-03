@@ -215,6 +215,7 @@ export const uploadFromUrl = (data: { key: string; url: string }) => {
           });
           break;
         case "success":
+          FileListState.run?.();
           clearInterval(timer);
           set({
             result: FileUploadResult.success,
@@ -226,6 +227,7 @@ export const uploadFromUrl = (data: { key: string; url: string }) => {
           );
           break;
         case "error":
+          FileListState.run?.();
           clearInterval(timer);
           set({
             result: FileUploadResult.error,
