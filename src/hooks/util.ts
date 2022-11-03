@@ -4,8 +4,8 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useMemoizedFn } from "ahooks";
 import destr from "destr";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { equals } from "remeda";
 import { subscribe } from "valtio";
+import { isEqual } from "lodash-es";
 
 export const useOnMount = (cb: () => (() => void) | void | Promise<void>) => {
   const ref = useRef(cb);
@@ -93,12 +93,12 @@ export const useStateForm = <T extends Object>(
     ...from,
   });
   useWatch(formObj.values, (values) => {
-    if (!equals(values, state)) Object.assign(state, values);
+    if (!isEqual(values, state)) Object.assign(state, values);
   });
   useWatch(state, (state) => {
-    if (!equals(state, formObj.values)) formObj.setValues(state);
+    if (!isEqual(state, formObj.values)) formObj.setValues(state);
     return subscribe(state, () => {
-      if (!equals(state, formObj.values)) formObj.setValues(state);
+      if (!isEqual(state, formObj.values)) formObj.setValues(state);
     });
   });
 

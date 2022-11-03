@@ -10,6 +10,7 @@ specifiers:
   '@mantine/notifications': ^5.6.3
   '@mantine/nprogress': ^5.6.3
   '@mantine/prism': ^5.6.3
+  '@types/lodash-es': ^4.17.6
   '@types/node': ^17.0.45
   '@types/react': ^18.0.24
   '@types/react-dom': ^18.0.8
@@ -20,6 +21,7 @@ specifiers:
   eslint: ^8.26.0
   eslint-config-react-app: ^7.0.1
   framer-motion: ^6.5.1
+  lodash-es: ^4.17.21
   ohmyfetch: ^0.4.20
   prettier: ^2.7.1
   react: ^18.2.0
@@ -41,6 +43,7 @@ dependencies:
   '@mantine/notifications': 5.6.3_hliqdvg4trnmlenfv3ync25tfa
   '@mantine/nprogress': 5.6.3_hliqdvg4trnmlenfv3ync25tfa
   '@mantine/prism': 5.6.3_hliqdvg4trnmlenfv3ync25tfa
+  '@types/lodash-es': 4.17.6
   '@types/node': 17.0.45
   '@types/react': 18.0.24
   '@types/react-dom': 18.0.8
@@ -51,6 +54,7 @@ dependencies:
   eslint: 8.26.0
   eslint-config-react-app: 7.0.1_pbk5dao76lnt7365jxacg2t7ne
   framer-motion: 6.5.1_biqbaboplfbrettd7655fr4n2y
+  lodash-es: 4.17.21
   ohmyfetch: 0.4.20
   prettier: 2.7.1
   react: 18.2.0
@@ -2069,6 +2073,16 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
+    dev: false
+
+  /@types/lodash-es/4.17.6:
+    resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
+    dependencies:
+      '@types/lodash': 4.14.187
+    dev: false
+
+  /@types/lodash/4.14.187:
+    resolution: {integrity: sha512-MrO/xLXCaUgZy3y96C/iOsaIqZSeupyTImKClHunL5GrmaiII2VwvWmLBu2hwa0Kp0sV19CsyjtrTc/Fx8rg/A==}
     dev: false
 
   /@types/node/17.0.45:
@@ -4094,6 +4108,10 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       p-locate: 5.0.0
+    dev: false
+
+  /lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
   /lodash.debounce/4.0.8:
