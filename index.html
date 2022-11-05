@@ -16,6 +16,14 @@
       href="https://cdn-1259243245.cos.ap-shanghai.myqcloud.com/gh/tabler/tabler-icons/iconfont/tabler-icons.min.css"
       rel="stylesheet"
     />
+    <style>
+      :root.dark {
+        color-scheme: dark;
+      }
+      :root.light {
+        color-scheme: light;
+      }
+    </style>
     <script
       src="https://cdn-1259243245.cos.ap-shanghai.myqcloud.com/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"
       defer
@@ -30,6 +38,20 @@
     ></script>
   </head>
   <body>
+    <script type="module">
+      (() => {
+        let theme = localStorage.getItem("theme");
+        if (theme === "dark" || theme === "light") {
+          document.documentElement.className = theme;
+          return;
+        }
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+        document.documentElement.className = theme;
+        localStorage.setItem("theme", theme);
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
   </body>
