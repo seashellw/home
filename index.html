@@ -16,14 +16,6 @@
       href="https://cdn-1259243245.cos.ap-shanghai.myqcloud.com/gh/tabler/tabler-icons/iconfont/tabler-icons.min.css"
       rel="stylesheet"
     />
-    <style>
-      :root.dark {
-        color-scheme: dark;
-      }
-      :root.light {
-        color-scheme: light;
-      }
-    </style>
     <script
       src="https://cdn-1259243245.cos.ap-shanghai.myqcloud.com/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"
       defer
@@ -36,8 +28,14 @@
       src="https://cdn-1259243245.cos.ap-shanghai.myqcloud.com/npm/canvas-confetti/dist/confetti.browser.min.js"
       defer
     ></script>
-  </head>
-  <body>
+    <style>
+      :root.dark {
+        color-scheme: dark;
+      }
+      :root.light {
+        color-scheme: light;
+      }
+    </style>
     <script type="module">
       (() => {
         let theme = localStorage.getItem("theme");
@@ -52,6 +50,8 @@
         localStorage.setItem("theme", theme);
       })();
     </script>
+  </head>
+  <body>
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
   </body>
