@@ -2,6 +2,7 @@ import { usePageTitle } from "@/hooks/title";
 import { Box, Burger, Header, MediaQuery, Title } from "@mantine/core";
 import React, { Suspense } from "react";
 import { useSnapshot } from "valtio";
+import Logo from "../lib/logo/Logo";
 import { NavbarState, toggleNavbar } from "./AppNavbar";
 
 const LogInButton = React.lazy(() => import("./LogInButton"));
@@ -29,7 +30,13 @@ const AppHeader: React.FC = () => {
         <Burger opened={isOpen} onClick={toggleNavbar} size="sm" mr="xl" />
       </MediaQuery>
       <Box className="flex-1">
-        <Title order={1} size={17} weight={700}>
+        <Title
+          order={1}
+          size={17}
+          weight={700}
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          <Logo />
           大道之行也，天下为公
         </Title>
       </Box>
