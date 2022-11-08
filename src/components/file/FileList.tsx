@@ -46,7 +46,6 @@ const Tree: React.FC<
         <li key={item.name}>
           <Box
             component="p"
-            sx={{ width: "calc(100% - 10px)" }}
             className="inline-flex items-center gap-2 my-[3px]"
           >
             <ActionIcon onClick={() => onContext?.(item)}>
@@ -56,7 +55,7 @@ const Tree: React.FC<
               />
             </ActionIcon>
             {item.isDir ? (
-              <span className="truncate">{item.name}</span>
+              <span className="">{item.name}</span>
             ) : (
               <Link item={item} />
             )}
@@ -89,6 +88,8 @@ const FileList: React.FC = () => {
       <Tree
         tree={tree}
         my="sm"
+        pb="sm"
+        sx={{ width: "100%", overflowX: "auto" }}
         onContext={(e) => {
           setItem(e);
           onOpen();
