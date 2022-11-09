@@ -148,6 +148,7 @@ const AddDialog: React.FC<{
               label="URL"
               mb="md"
               withAsterisk
+              autoFocus
               {...form.getInputProps("url")}
             />
           ) : null}
