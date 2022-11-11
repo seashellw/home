@@ -1,6 +1,6 @@
 import { useHandleInput, useOpen, useStorageStore } from "@/hooks/util";
 import { checkPathItem, fetchFileList } from "@/util/tencent";
-import { ActionIcon, Button, TextInput } from "@mantine/core";
+import { ActionIcon, TextInput } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useRequest } from "ahooks";
 import React, { Suspense, useEffect } from "react";
