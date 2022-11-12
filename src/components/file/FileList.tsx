@@ -2,7 +2,7 @@ import { useOpen } from "@/hooks/util";
 import { getFileUrl } from "@/util/tencent";
 import { DeepReadonly } from "@/util/util";
 import { ActionIcon, Anchor, Box, BoxProps } from "@mantine/core";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import Icon from "../util/Icon";
 import {
@@ -83,6 +83,15 @@ const FileList: React.FC = () => {
   );
 
   const { tree } = useSnapshot(FileTreeState);
+  const handleContext = useCallback(
+    (item: DeepReadonly<TreeItem>) => {
+      if (!item.isDir) {
+        setItem(item);
+        onOpen();
+      }
+    },
+    [onOpen]
+  );
   return (
     <>
       <Tree
@@ -90,10 +99,7 @@ const FileList: React.FC = () => {
         my="sm"
         pb="sm"
         sx={{ width: "100%", overflowX: "auto" }}
-        onContext={(e) => {
-          setItem(e);
-          onOpen();
-        }}
+        onContext={handleContext}
       />
       <Suspense>
         <FileDetailModal open={open} onClose={onClose} item={item} />

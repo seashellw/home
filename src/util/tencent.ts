@@ -16,45 +16,47 @@ declare global {
   }
 }
 
-export const Bucket = "cache-1259243245";
-export const Region = "ap-beijing";
+export const Bucket = {
+  Bucket: "",
+  Region: "",
+};
 
 export const checkCOS = () => {
   return !!window?.COS;
 };
 
-export const getCOS = (() => {
-  let cos: any = undefined;
-  return () => {
-    if (cos) {
-      return cos;
-    }
-    if (!checkCOS()) {
-      console.error(
-        "COS not found. Please add the following script to your html."
-      );
-      return undefined;
-    }
-    const COS = window?.COS;
-    cos = new COS({
-      getAuthorization: function (_: any, callback: any) {
-        fetch("https://seashellw.world/server/api/fileAuthorization")
-          .then((res) => res.json())
-          .then((res) => {
-            let tempKeys = res?.tempKeys;
-            callback({
-              TmpSecretId: tempKeys.credentials.tmpSecretId,
-              TmpSecretKey: tempKeys.credentials.tmpSecretKey,
-              SecurityToken: tempKeys.credentials.sessionToken,
-              StartTime: tempKeys.startTime,
-              ExpiredTime: tempKeys.expiredTime,
-            });
+let cos = (async () => {
+  if (!checkCOS()) {
+    console.error(
+      "COS not found. Please add the following script to your html."
+    );
+    return undefined;
+  }
+  let res = await fetch("/server/api/fileAuthorization").then((res) =>
+    res.json()
+  );
+  Bucket.Bucket = res.Bucket;
+  Bucket.Region = res.Region;
+  const COS = window?.COS;
+  return new COS({
+    getAuthorization: function (_: any, callback: any) {
+      fetch("/server/api/fileAuthorization")
+        .then((res) => res.json())
+        .then((res) => {
+          let tempKeys = res?.tempKeys;
+          callback({
+            TmpSecretId: tempKeys.credentials.tmpSecretId,
+            TmpSecretKey: tempKeys.credentials.tmpSecretKey,
+            SecurityToken: tempKeys.credentials.sessionToken,
+            StartTime: tempKeys.startTime,
+            ExpiredTime: tempKeys.expiredTime,
           });
-      },
-    });
-    return cos;
-  };
+        });
+    },
+  });
 })();
+
+export const getCOS = async () => cos;
 
 export const checkPathItem = (name: string) => {
   return /^[^\s/\\]*$/.test(name);
@@ -104,91 +106,139 @@ export const fetchUpload = (param: {
   body: File;
   onProgress: (progressData: ProgressInfo) => void;
 }) =>
-  new Promise<{
-    ok: boolean;
-  }>((resolve) => {
-    getCOS().uploadFile(
-      {
-        Bucket,
-        Region,
-        Key: param.key,
-        Body: param.body,
-        onProgress: param.onProgress,
-      },
-      function (err: any) {
-        if (err) {
-          console.error(err);
-          resolve({ ok: false });
-          return;
+  new Promise<string>((resolve) => {
+    getCOS().then((cos) => {
+      cos.uploadFile(
+        {
+          Bucket: Bucket.Bucket,
+          Region: Bucket.Region,
+          Key: param.key,
+          Body: param.body,
+          onProgress: param.onProgress,
+        },
+        function (err: any) {
+          if (err) {
+            console.error(err);
+            resolve(JSON.stringify(err));
+            return;
+          }
+          resolve("");
         }
-        resolve({ ok: true });
-      }
-    );
+      );
+    });
   });
 
 export const fetchFileList = (space?: string) =>
   new Promise<FileItem[] | undefined>((resolve) => {
-    getCOS().getBucket(
-      {
-        Bucket,
-        Region,
-        Prefix: space + "/",
-      },
-      function (err: any, data: any) {
-        if (err) {
-          console.error(err);
-          resolve(undefined);
-          return;
-        }
-        let resList: FileItem[] = [];
-        for (const item of data.Contents) {
-          let keyObj = parseKey(item.Key);
-          if (!keyObj) {
-            console.error("文件key解析错误", item.Key);
+    getCOS().then((cos) => {
+      cos.getBucket(
+        {
+          Bucket: Bucket.Bucket,
+          Region: Bucket.Region,
+          Prefix: space + "/",
+        },
+        function (err: any, data: any) {
+          if (err) {
+            console.error(err);
             resolve(undefined);
             return;
           }
-          resList.push({
-            time: parseISO(item.LastModified).getTime(),
-            size: parseInt(item.Size),
-            ...keyObj,
-          });
+          let resList: FileItem[] = [];
+          for (const item of data.Contents) {
+            let keyObj = parseKey(item.Key);
+            if (!keyObj) {
+              console.error("文件key解析错误", item.Key);
+              resolve(undefined);
+              return;
+            }
+            resList.push({
+              time: parseISO(item.LastModified).getTime(),
+              size: parseInt(item.Size),
+              ...keyObj,
+            });
+          }
+          resolve(resList);
         }
-        resolve(resList);
-      }
-    );
+      );
+    });
   });
 
 export const getFileUrl = async (item: { space: string; path: string }) =>
   new Promise<string | undefined>((resolve) => {
-    getCOS().getObjectUrl(
-      {
-        Bucket,
-        Region,
-        Key: generateKey(item),
-        Protocol: "https:",
-      },
-      (err: any, data: any) => {
-        resolve(err ? undefined : data.Url);
-      }
-    );
+    getCOS().then((cos) => {
+      cos.getObjectUrl(
+        {
+          Bucket: Bucket.Bucket,
+          Region: Bucket.Region,
+          Key: generateKey(item),
+          Protocol: "https:",
+        },
+        (err: any, data: any) => {
+          resolve(err ? undefined : data.Url);
+        }
+      );
+    });
   });
 
 export const fetchDeleteFile = (key: string) =>
-  new Promise<boolean>((resolve) => {
-    getCOS().deleteObject(
-      {
-        Bucket,
-        Region,
-        Key: key,
-      },
-      function (err: any) {
-        if (err) {
-          console.error(err);
-          resolve(false);
-          return;
+  new Promise<string>((resolve) => {
+    getCOS().then((cos) => {
+      cos.deleteObject(
+        {
+          Bucket: Bucket.Bucket,
+          Region: Bucket.Region,
+          Key: key,
+        },
+        function (err: any) {
+          if (err) {
+            console.error(err);
+            resolve(JSON.stringify(err));
+            return;
+          }
+          resolve("");
         }
-        resolve(true);
-      }
-    );
+      );
+    });
+  });
+
+export const fetchRenameFile = (
+  oldKey: string,
+  newKey: string,
+  onProgress: (progressData: ProgressInfo) => void
+) =>
+  new Promise<string>((resolve) => {
+    getCOS().then((cos) => {
+      cos.sliceCopyFile(
+        {
+          Bucket: Bucket.Bucket,
+          Region: Bucket.Region,
+          Key: newKey,
+          CopySource: `${Bucket.Bucket}.cos.${Bucket.Region}.myqcloud.com/${oldKey}`,
+          onProgress: onProgress,
+        },
+        function (err: any) {
+          if (err) {
+            console.error(err);
+            resolve(JSON.stringify(err));
+            return;
+          }
+          cos.deleteObject(
+            {
+              Bucket: Bucket.Bucket,
+              Region: Bucket.Region,
+              Key: oldKey,
+            },
+            function (err: any) {
+              if (err) {
+                console.error(err);
+                resolve(JSON.stringify(err));
+                return;
+              } else {
+                resolve("");
+              }
+            }
+          );
+        }
+      );
+    });
   });

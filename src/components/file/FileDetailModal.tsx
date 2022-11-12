@@ -1,4 +1,4 @@
-import { useMinWidth } from "@/hooks/util";
+import { useHandleInput, useMinWidth } from "@/hooks/util";
 import { fetchDeleteFile, join } from "@/util/tencent";
 import {
   DeepReadonly,
@@ -7,12 +7,11 @@ import {
   isImg,
   isVideo,
 } from "@/util/util";
-import { Image } from "@mantine/core";
-import { Button, List, Modal } from "@mantine/core";
+import { Button, Image, Input, List, Modal } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Prism } from "@mantine/prism";
-import React, { useCallback, useMemo, useState } from "react";
-import { FileListState, getShareUrl, TreeItem } from "./fileState";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { FileListState, getShareUrl, moveFile, TreeItem } from "./fileState";
 
 const { Item } = List;
 
@@ -21,20 +20,26 @@ const FileDetailModal: React.FC<{
   onClose: () => void;
   item?: DeepReadonly<TreeItem>;
 }> = ({ open, onClose, item }) => {
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filePath, setFilePath] = useState("");
+  const onChangeFilePath = useHandleInput(setFilePath);
+  useEffect(() => {
+    setFilePath(item?.path || "");
+  }, [item?.path, setFilePath]);
   const handleDelete = useCallback(async () => {
     if (!item) return;
-    setIsDeleteLoading(true);
-    let res = await fetchDeleteFile(join(item?.space, item?.path));
-    setIsDeleteLoading(false);
-    if (res) {
+    setIsLoading(true);
+    let err = await fetchDeleteFile(join(item?.space, item?.path));
+    setIsLoading(false);
+    if (!err) {
       showNotification({
         message: "删除成功",
         color: "green",
       });
     } else {
       showNotification({
-        message: "删除失败",
+        title: "删除失败",
+        message: err,
         color: "red",
       });
     }
@@ -47,6 +52,13 @@ const FileDetailModal: React.FC<{
     () => getShareUrl(join(item?.space, item?.path)),
     [item?.path, item?.space]
   );
+
+  const handleRename = useCallback(async () => {
+    if (!item) return;
+    moveFile(item, filePath);
+    onClose();
+  }, [filePath, item, onClose]);
+
   return (
     <Modal
       opened={open}
@@ -68,12 +80,19 @@ const FileDetailModal: React.FC<{
           <Item>文件类型：{getFileExtensionName(item.name)}</Item>
         </List>
       ) : null}
-      <Button
-        size="xs"
-        color="red"
-        onClick={handleDelete}
-        loading={isDeleteLoading}
-      >
+      <p className="mb-1">移动到</p>
+      <div className="flex gap-2 mb-4">
+        <Input
+          value={filePath}
+          onChange={onChangeFilePath}
+          className="flex-grow"
+          disabled={isLoading}
+        />
+        <Button color="grape" onClick={handleRename} loading={isLoading}>
+          确定
+        </Button>
+      </div>
+      <Button color="red" onClick={handleDelete} loading={isLoading}>
         删除
       </Button>
     </Modal>

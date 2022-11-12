@@ -27,9 +27,11 @@ const UploadProgress: React.FC = () => {
       case FileUploadResult.uploading:
         return { color: "blue", label: "上传中" };
       case FileUploadResult.success:
-        return { color: "green", label: "上传成功" };
+        return { color: "green", label: "成功" };
       case FileUploadResult.error:
-        return { color: "red", label: "上传失败" };
+        return { color: "red", label: "失败" };
+      case FileUploadResult.copy:
+        return { color: "indigo", label: "复制中" };
     }
   }, []);
 
@@ -44,7 +46,7 @@ const UploadProgress: React.FC = () => {
         size={isWindowLarge ? "lg" : "calc(100vw - 50px)"}
         radius="md"
       >
-        <p className="mt-0 mb-1">{`${list.length} 个文件正在上传`}</p>
+        <p className="mt-0 mb-1">{`正在进行中 ${list.length}`}</p>
         {list.map((item) => (
           <div key={item.key} className="my-3 truncate">
             <span className="">{item.name}</span>

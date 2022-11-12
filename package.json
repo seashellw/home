@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "lint": "eslint --fix --ext .ts,.tsx ./src",
+    "lint": "prettier --write ./src && eslint --fix --ext .ts,.tsx ./src",
     "preview": "vite preview"
   },
   "dependencies": {
