@@ -58,15 +58,6 @@ let cos = (async () => {
 
 export const getCOS = async () => cos;
 
-export const checkPathItem = (name: string) => {
-  return /^[^\s/\\]*$/.test(name);
-};
-
-export const checkPath = (path: string) => {
-  path = path.replace(/[/\\]/g, "");
-  return checkPathItem(path);
-};
-
 export const join = (...path: (string | undefined)[]) => {
   let result: string[] = [];
   for (let item of path) {
@@ -76,19 +67,34 @@ export const join = (...path: (string | undefined)[]) => {
   return result.filter((item) => item).join("/");
 };
 
-export const generateKey = (param: { space: string; path: string }) =>
-  join(param.space, param.path);
-
-export const parseKey = (key: string) => {
+export const getSpace = (key: string) => {
   const index = key.indexOf("/");
-  if (index <= 0) {
-    return null;
-  }
-  return {
-    space: key.slice(0, index),
-    path: key.slice(index + 1),
-  };
+  return key.slice(0, index);
 };
+
+export const getPath = (key: string) => {
+  const index = key.indexOf("/");
+  return key.slice(index + 1);
+};
+
+/**
+ * 将标准COS路径转换为可读路径
+ */
+export const decodeKey = (key: string) =>
+  key
+    .split("/")
+    .map((item) => decodeURIComponent(item))
+    .join("/");
+
+/**
+ * 将用户输入的路径转换为COS路径
+ */
+export const encodeKey = (key: string) =>
+  key
+    .split("/")
+    .filter((i) => i)
+    .map((item) => encodeURIComponent(item))
+    .join("/");
 
 export interface ProgressInfo {
   // 已经上传的文件部分大小，以字节（Bytes）为单位
@@ -112,7 +118,7 @@ export const fetchUpload = (param: {
         {
           Bucket: Bucket.Bucket,
           Region: Bucket.Region,
-          Key: param.key,
+          Key: encodeKey(param.key),
           Body: param.body,
           onProgress: param.onProgress,
         },
@@ -135,7 +141,7 @@ export const fetchFileList = (space?: string) =>
         {
           Bucket: Bucket.Bucket,
           Region: Bucket.Region,
-          Prefix: space + "/",
+          Prefix: space ? encodeKey(space) + "/" : "/",
         },
         function (err: any, data: any) {
           if (err) {
@@ -145,16 +151,11 @@ export const fetchFileList = (space?: string) =>
           }
           let resList: FileItem[] = [];
           for (const item of data.Contents) {
-            let keyObj = parseKey(item.Key);
-            if (!keyObj) {
-              console.error("文件key解析错误", item.Key);
-              resolve(undefined);
-              return;
-            }
             resList.push({
               time: parseISO(item.LastModified).getTime(),
               size: parseInt(item.Size),
-              ...keyObj,
+              space: decodeKey(getSpace(item.Key)),
+              path: decodeKey(getPath(item.Key)),
             });
           }
           resolve(resList);
@@ -163,22 +164,10 @@ export const fetchFileList = (space?: string) =>
     });
   });
 
-export const getFileUrl = async (item: { space: string; path: string }) =>
-  new Promise<string | undefined>((resolve) => {
-    getCOS().then((cos) => {
-      cos.getObjectUrl(
-        {
-          Bucket: Bucket.Bucket,
-          Region: Bucket.Region,
-          Key: generateKey(item),
-          Protocol: "https:",
-        },
-        (err: any, data: any) => {
-          resolve(err ? undefined : data.Url);
-        }
-      );
-    });
-  });
+export const getFileUrl = (item: { space: string; path: string }) =>
+  `https://seashellw.world/server/api/file/${encodeKey(
+    join(item.space, item.path)
+  )}`;
 
 export const fetchDeleteFile = (key: string) =>
   new Promise<string>((resolve) => {
@@ -187,7 +176,7 @@ export const fetchDeleteFile = (key: string) =>
         {
           Bucket: Bucket.Bucket,
           Region: Bucket.Region,
-          Key: key,
+          Key: encodeKey(key),
         },
         function (err: any) {
           if (err) {
@@ -208,6 +197,8 @@ export const fetchRenameFile = (
 ) =>
   new Promise<string>((resolve) => {
     getCOS().then((cos) => {
+      oldKey = encodeKey(oldKey);
+      newKey = encodeKey(newKey);
       cos.sliceCopyFile(
         {
           Bucket: Bucket.Bucket,

@@ -53,7 +53,7 @@ const Bookmark: React.FC = () => {
   if (!isLogIn) return null;
 
   return (
-    <Group spacing="xs">
+    <Group spacing="xs" className="m-3">
       {list.map((item) => (
         <ButtonItem key={item.id} item={item} />
       ))}

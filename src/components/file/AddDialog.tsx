@@ -1,5 +1,5 @@
 import { useWatch } from "@/hooks/util";
-import { checkPath, join } from "@/util/tencent";
+import { join } from "@/interface/file/tencent";
 import {
   Button,
   FileInput,
@@ -17,7 +17,6 @@ import {
   uploadFromUrl,
   uploadMore,
 } from "./fileState";
-import { getSpaceError } from "./SearchForm";
 
 const UploadProgress = React.lazy(() => import("./UploadProgress"));
 
@@ -39,8 +38,7 @@ const AddDialog: React.FC<{
     },
     validate: (values) => {
       const errors: Record<string, string | undefined> = {};
-      errors.space = getSpaceError(values.space);
-      errors.path = checkPath(values.path) ? undefined : "路径不合法";
+      errors.space = values.space ? undefined : "请输入命名空间";
       switch (type) {
         case "upload":
           if (!values.fileList.length) {

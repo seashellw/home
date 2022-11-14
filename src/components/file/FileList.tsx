@@ -1,5 +1,5 @@
 import { useOpen } from "@/hooks/util";
-import { getFileUrl } from "@/util/tencent";
+import { getFileUrl } from "@/interface/file/tencent";
 import { DeepReadonly } from "@/util/util";
 import { ActionIcon, Anchor, Box, BoxProps } from "@mantine/core";
 import React, { Suspense, useCallback, useEffect, useState } from "react";
@@ -18,7 +18,7 @@ const Link: React.FC<{ item: DeepReadonly<TreeItem> }> = React.memo(
   ({ item }) => {
     const [href, setHref] = useState<string | undefined>(undefined);
     useEffect(() => {
-      getFileUrl(item).then(setHref);
+      setHref(getFileUrl(item));
     }, [item]);
     return (
       <Anchor

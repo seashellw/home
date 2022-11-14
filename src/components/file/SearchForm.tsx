@@ -1,5 +1,5 @@
 import { useHandleInput, useOpen, useStorageStore } from "@/hooks/util";
-import { checkPathItem, fetchFileList } from "@/util/tencent";
+import { fetchFileList } from "@/interface/file/tencent";
 import { ActionIcon, TextInput } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useRequest } from "ahooks";
@@ -9,11 +9,6 @@ import Icon from "../util/Icon";
 import { FileFormDataState, FileListState } from "./fileState";
 
 const AddDialog = React.lazy(() => import("./AddDialog"));
-
-export const getSpaceError = (value: string) => {
-  if (!value) return "请输入命名空间";
-  if (!checkPathItem(value)) return "不能包含特殊字符";
-};
 
 const SearchForm: React.FC = () => {
   useStorageStore("FileListState", FileListState);
@@ -45,13 +40,13 @@ const SearchForm: React.FC = () => {
 
   const handleChange = useHandleInput((value) => {
     FileFormDataState.space = value;
-    FileFormDataState.error = getSpaceError(value);
+    FileFormDataState.error = value ? undefined : "请输入命名空间";
   });
 
   const { open, onClose, onOpen } = useOpen();
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 m-3">
       <TextInput
         placeholder="命名空间"
         className="flex-grow"

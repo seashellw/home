@@ -4,14 +4,14 @@ import {
   FileItem,
   join,
   ProgressInfo,
-} from "@/util/tencent";
-import { sleep } from "@/util/util";
-import { proxy } from "valtio";
+} from "@/interface/file/tencent";
 import {
   fetchFileUrlUpload,
   fetchFileUrlUploadStatus,
 } from "@/interface/file/urlUpload";
+import { sleep } from "@/util/util";
 import { showNotification } from "@mantine/notifications";
+import { proxy } from "valtio";
 
 export interface TreeItem extends FileItem {
   isDir: boolean;
@@ -253,11 +253,6 @@ export const uploadFromUrl = (data: { key: string; url: string }) => {
       }
     }, 1000);
   });
-};
-
-export const getShareUrl = (key: string) => {
-  key = encodeURIComponent(key);
-  return `https://seashellw.world/server/api/file?key=${key}`;
 };
 
 export const moveFile = (

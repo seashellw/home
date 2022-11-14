@@ -1,5 +1,5 @@
 import { useHandleInput, useMinWidth } from "@/hooks/util";
-import { fetchDeleteFile, join } from "@/util/tencent";
+import { fetchDeleteFile, getFileUrl, join } from "@/interface/file/tencent";
 import {
   DeepReadonly,
   formatSize,
@@ -11,7 +11,7 @@ import { Button, Image, Input, List, Modal } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Prism } from "@mantine/prism";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { FileListState, getShareUrl, moveFile, TreeItem } from "./fileState";
+import { FileListState, moveFile, TreeItem } from "./fileState";
 
 const { Item } = List;
 
@@ -48,10 +48,10 @@ const FileDetailModal: React.FC<{
   }, [item, onClose]);
 
   const isWindowLarge = useMinWidth(500);
-  const url = useMemo(
-    () => getShareUrl(join(item?.space, item?.path)),
-    [item?.path, item?.space]
-  );
+  const url = useMemo(() => {
+    if (!item) return "";
+    return getFileUrl(item);
+  }, [item]);
 
   const handleRename = useCallback(async () => {
     if (!item) return;

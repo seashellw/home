@@ -2,7 +2,7 @@ import { usePageTitle } from "@/hooks/title";
 import { Burger, Header, MediaQuery, Title } from "@mantine/core";
 import React, { Suspense } from "react";
 import { useSnapshot } from "valtio";
-import Logo from "../lib/logo/Logo";
+import Icon from "../util/Icon";
 import { NavbarState, toggleNavbar } from "./AppNavbar";
 
 const LogInButton = React.lazy(() => import("./LogInButton"));
@@ -18,7 +18,7 @@ const AppHeader: React.FC = () => {
   const isOpen = useSnapshot(NavbarState).open;
 
   return (
-    <Header height={headerHeight} className="flex items-center" p="sm">
+    <Header height={headerHeight} fixed className="flex items-center" p="sm">
       <MediaQuery largerThan="sm" styles={{ display: "none" }}>
         <Burger opened={isOpen} onClick={toggleNavbar} size="sm" mr="xl" />
       </MediaQuery>
@@ -27,10 +27,10 @@ const AppHeader: React.FC = () => {
         size={17}
         weight={700}
         mr="sm"
-        className="flex-grow flex items-center overflow-hidden"
+        className="flex-grow flex items-center"
       >
-        <Logo />
-        <span className="truncate">大道之行也，天下为公</span>
+        <Icon icon="brand-react" size={25} className="mr-2" />
+        <span className="truncate">大道之行也 天下为公</span>
       </Title>
       <Suspense>
         <LogInButton />
