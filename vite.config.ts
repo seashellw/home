@@ -1,17 +1,10 @@
 import react from "@vitejs/plugin-react";
 import { join, resolve } from "path";
-import { presetUno } from "unocss";
-import unocss from "unocss/vite";
 import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    unocss({
-      presets: [presetUno()],
-    }),
-    react(),
-  ],
+  plugins: [react()],
   base: "/home/",
   build: {
     outDir: "./dist/home",
