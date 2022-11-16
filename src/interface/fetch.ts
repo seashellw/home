@@ -1,5 +1,5 @@
 import { TOKEN_KEY } from "@/interface/util";
-import { $fetch, FetchError, SearchParams } from "ohmyfetch";
+import { FetchError, ofetch, SearchParameters } from "ofetch";
 
 const { origin } = window.location;
 export const HOST = origin + "/server/api";
@@ -14,12 +14,12 @@ export type FetchResponse<T = any> = {
 export const fetch: <Response = any>(option: {
   path: string;
   headers?: Record<string, string>;
-  query?: any;
+  Query?: SearchParameters;
   body?: any;
   method?: "GET" | "POST" | "PUT" | "DELETE";
 }) => Promise<FetchResponse<Response>> = async (option) => {
   try {
-    let res = await $fetch(option.path, {
+    let res = await ofetch(option.path, {
       baseURL: HOST,
       ...option,
       async onRequest({ options }) {
@@ -36,20 +36,20 @@ export const fetch: <Response = any>(option: {
       data: res,
       message: "",
     };
-  } catch (e) {
-    if (!(e instanceof FetchError)) throw e;
+  } catch (err) {
+    if (!(err instanceof FetchError)) throw err;
     return {
-      code: e.response?.status || 0,
+      code: err.response?.status || 0,
       ok: false,
       data: undefined,
-      message: e.data,
+      message: err.data,
     };
   }
 };
 
 export const get: <
   Response = any,
-  Query extends SearchParams | undefined = any
+  Query extends SearchParameters | undefined = undefined
 >(option: {
   path: string;
   headers?: Record<string, string>;
