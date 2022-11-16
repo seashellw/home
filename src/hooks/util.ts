@@ -3,9 +3,9 @@ import { UseFormInput } from "@mantine/form/lib/types";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMemoizedFn } from "ahooks";
 import destr from "destr";
+import { isEqual } from "lodash-es";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { subscribe } from "valtio";
-import { isEqual } from "lodash-es";
 
 export const useOnMount = (cb: () => (() => void) | void | Promise<void>) => {
   const ref = useRef(cb);

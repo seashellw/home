@@ -1,4 +1,3 @@
-import { isDark } from "@/util/util";
 import {
   ColorScheme,
   ColorSchemeProvider,
@@ -6,20 +5,25 @@ import {
 } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import { NavigationProgress } from "@mantine/nprogress";
-import { useLocalStorageState } from "ahooks";
-import React, { PropsWithChildren, useCallback, useMemo } from "react";
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 
 const useDark = () => {
-  const [colorScheme, setColorScheme] = useLocalStorageState<ColorScheme>(
-    "theme",
-    {
-      defaultValue: isDark() ? "dark" : "light",
-    }
+  const [colorScheme, setColorScheme] = useState<ColorScheme>(
+    localStorage.getItem("theme") as ColorScheme
   );
 
   const toggleColorScheme = useCallback(
-    (value?: ColorScheme) =>
-      setColorScheme(value || (colorScheme === "dark" ? "light" : "dark")),
+    (value?: ColorScheme) => {
+      const nextColorScheme =
+        value ?? (colorScheme === "dark" ? "light" : "dark");
+      localStorage.setItem("theme", nextColorScheme);
+      setColorScheme(nextColorScheme);
+    },
     [colorScheme, setColorScheme]
   );
 
@@ -49,26 +53,6 @@ const Provider: React.FC<PropsWithChildren> = ({ children }) => {
         withNormalizeCSS
         withCSSVariables
         theme={{
-          globalStyles: () => ({
-            "*": {
-              scrollBehavior: "smooth",
-            },
-            "[data-radix-scroll-area-viewport]": {
-              scrollBehavior: "auto",
-            },
-            ".mantine-ScrollArea-viewport": {
-              scrollBehavior: "auto",
-            },
-            ":root.dark": {
-              colorScheme: "dark",
-            },
-            ".ti": {
-              transform: "scale(1.2)",
-            },
-            ".mantine-Prism-code": {
-              fontFamily: "JetBrainsMono",
-            },
-          }),
           headings: {
             fontFamily: "inherit",
           },

@@ -75,7 +75,7 @@ const Format: React.FC = () => {
   );
 
   return (
-    <Card withBorder my={"md"} py="xs">
+    <Card withBorder className="m-3">
       <Title order={6}>格式化</Title>
       <Group value={parser} onChange={setParser} mb="xs">
         {languages.map(({ label, parser }) => (

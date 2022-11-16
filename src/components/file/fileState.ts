@@ -1,11 +1,17 @@
-import { fetchUpload, FileItem, join, ProgressInfo } from "@/util/tencent";
-import { sleep } from "@/util/util";
-import { proxy } from "valtio";
+import {
+  fetchRenameFile,
+  fetchUpload,
+  FileItem,
+  join,
+  ProgressInfo,
+} from "@/interface/file/tencent";
 import {
   fetchFileUrlUpload,
   fetchFileUrlUploadStatus,
 } from "@/interface/file/urlUpload";
+import { sleep } from "@/util/util";
 import { showNotification } from "@mantine/notifications";
+import { proxy } from "valtio";
 
 export interface TreeItem extends FileItem {
   isDir: boolean;
@@ -99,6 +105,7 @@ export const enum FileUploadResult {
   error,
   uploading,
   prepare,
+  copy,
 }
 
 interface FileUploadItem {
@@ -142,9 +149,9 @@ export const uploadMore = (path: string, files: File[]) => {
         });
       },
       key: state.key,
-    }).then(async ({ ok }) => {
+    }).then(async (err) => {
       FileListState.run?.();
-      if (ok) {
+      if (!err) {
         set({
           result: FileUploadResult.success,
         });
@@ -157,7 +164,8 @@ export const uploadMore = (path: string, files: File[]) => {
           result: FileUploadResult.error,
         });
         showNotification({
-          message: `${state.name} 上传失败`,
+          title: `${state.name} 上传失败`,
+          message: err,
           color: "red",
         });
         await sleep(3000);
@@ -247,7 +255,55 @@ export const uploadFromUrl = (data: { key: string; url: string }) => {
   });
 };
 
-export const getShareUrl = (key: string) => {
-  key = encodeURIComponent(key);
-  return `https://seashellw.world/server/api/file?key=${key}`;
+export const moveFile = (
+  file: { space: string; path: string; name: string },
+  newPath: string
+) => {
+  const oldKey = join(file.space, file.path);
+  const newKey = join(file.space, newPath);
+  let state: FileUploadItem = {
+    key: oldKey,
+    name: file.name,
+    result: FileUploadResult.copy,
+    progress: {
+      loaded: 0,
+      total: 0,
+      speed: 0,
+      percent: 0,
+    },
+  };
+  FileUploadListState.list.push(state);
+  const set = (a: Partial<FileUploadItem>) => {
+    FileUploadListState.list = FileUploadListState.list.map((item) => {
+      if (item.key === state.key) return { ...item, ...a };
+      return item;
+    });
+  };
+  fetchRenameFile(oldKey, newKey, (progress) => {
+    set({ progress });
+  }).then(async (err) => {
+    FileListState.run?.();
+    if (!err) {
+      set({
+        result: FileUploadResult.success,
+      });
+      await sleep(1000);
+      FileUploadListState.list = FileUploadListState.list.filter(
+        (item) => item.key !== state.key
+      );
+    } else {
+      set({
+        result: FileUploadResult.error,
+      });
+      showNotification({
+        title: `${state.name} 移动失败`,
+        message: err,
+        color: "red",
+      });
+      await sleep(3000);
+      FileUploadListState.list = FileUploadListState.list.filter(
+        (item) => item.key !== state.key
+      );
+    }
+  });
 };

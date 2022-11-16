@@ -48,7 +48,12 @@ const AddDialog: React.FC = () => {
     >
       <form onSubmit={handleSave}>
         <TextInput label="标题" {...form.getInputProps("title")} mb="sm" />
-        <TextInput label="链接" {...form.getInputProps("url")} mb="lg" />
+        <TextInput
+          label="链接"
+          {...form.getInputProps("url")}
+          mb="lg"
+          autoFocus
+        />
         <Button
           type="submit"
           variant="filled"

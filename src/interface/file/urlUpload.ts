@@ -1,5 +1,5 @@
 import { post } from "@/interface/fetch";
-import { ProgressInfo } from "@/util/tencent";
+import { decodeKey, encodeKey, ProgressInfo } from "@/interface/file/tencent";
 
 export interface FileUrlUploadRequest {
   url?: string;
@@ -13,16 +13,32 @@ export interface FileUrlUploadResponse {
   message: string;
 }
 
-export const fetchFileUrlUpload = (req: Required<FileUrlUploadRequest>) =>
-  post<{}, typeof req>({
+export const fetchFileUrlUpload = async (
+  req: Required<FileUrlUploadRequest>
+) => {
+  req = {
+    ...req,
+    key: encodeKey(req.key),
+  };
+  return post<{}, typeof req>({
     path: "/fileUrlUpload",
     body: req,
   });
+};
 
-export const fetchFileUrlUploadStatus = (
+export const fetchFileUrlUploadStatus = async (
   req: Pick<FileUrlUploadRequest, "key">
-) =>
-  post<FileUrlUploadResponse, typeof req>({
+) => {
+  req = {
+    ...req,
+    key: encodeKey(req.key),
+  };
+  let res = await post<FileUrlUploadResponse, typeof req>({
     path: "/fileUrlUpload",
     body: req,
   });
+  if (res.data) {
+    res.data.key = decodeKey(res.data.key);
+  }
+  return res;
+};

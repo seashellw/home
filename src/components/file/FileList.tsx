@@ -1,8 +1,8 @@
 import { useOpen } from "@/hooks/util";
-import { getFileUrl } from "@/util/tencent";
+import { getFileUrl } from "@/interface/file/tencent";
 import { DeepReadonly } from "@/util/util";
 import { ActionIcon, Anchor, Box, BoxProps } from "@mantine/core";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { useSnapshot } from "valtio";
 import Icon from "../util/Icon";
 import {
@@ -18,7 +18,7 @@ const Link: React.FC<{ item: DeepReadonly<TreeItem> }> = React.memo(
   ({ item }) => {
     const [href, setHref] = useState<string | undefined>(undefined);
     useEffect(() => {
-      getFileUrl(item).then(setHref);
+      setHref(getFileUrl(item));
     }, [item]);
     return (
       <Anchor
@@ -46,7 +46,6 @@ const Tree: React.FC<
         <li key={item.name}>
           <Box
             component="p"
-            sx={{ width: "calc(100% - 10px)" }}
             className="inline-flex items-center gap-2 my-[3px]"
           >
             <ActionIcon onClick={() => onContext?.(item)}>
@@ -56,7 +55,7 @@ const Tree: React.FC<
               />
             </ActionIcon>
             {item.isDir ? (
-              <span className="truncate">{item.name}</span>
+              <span className="">{item.name}</span>
             ) : (
               <Link item={item} />
             )}
@@ -84,15 +83,23 @@ const FileList: React.FC = () => {
   );
 
   const { tree } = useSnapshot(FileTreeState);
+  const handleContext = useCallback(
+    (item: DeepReadonly<TreeItem>) => {
+      if (!item.isDir) {
+        setItem(item);
+        onOpen();
+      }
+    },
+    [onOpen]
+  );
   return (
     <>
       <Tree
         tree={tree}
         my="sm"
-        onContext={(e) => {
-          setItem(e);
-          onOpen();
-        }}
+        pb="sm"
+        sx={{ width: "100%", overflowX: "auto" }}
+        onContext={handleContext}
       />
       <Suspense>
         <FileDetailModal open={open} onClose={onClose} item={item} />
