@@ -1,5 +1,4 @@
 import {
-  fetchRenameFile,
   fetchUpload,
   FileItem,
   join,
@@ -252,58 +251,5 @@ export const uploadFromUrl = (data: { key: string; url: string }) => {
           break;
       }
     }, 1000);
-  });
-};
-
-export const moveFile = (
-  file: { space: string; path: string; name: string },
-  newPath: string
-) => {
-  const oldKey = join(file.space, file.path);
-  const newKey = join(file.space, newPath);
-  let state: FileUploadItem = {
-    key: oldKey,
-    name: file.name,
-    result: FileUploadResult.copy,
-    progress: {
-      loaded: 0,
-      total: 0,
-      speed: 0,
-      percent: 0,
-    },
-  };
-  FileUploadListState.list.push(state);
-  const set = (a: Partial<FileUploadItem>) => {
-    FileUploadListState.list = FileUploadListState.list.map((item) => {
-      if (item.key === state.key) return { ...item, ...a };
-      return item;
-    });
-  };
-  fetchRenameFile(oldKey, newKey, (progress) => {
-    set({ progress });
-  }).then(async (err) => {
-    FileListState.run?.();
-    if (!err) {
-      set({
-        result: FileUploadResult.success,
-      });
-      await sleep(1000);
-      FileUploadListState.list = FileUploadListState.list.filter(
-        (item) => item.key !== state.key
-      );
-    } else {
-      set({
-        result: FileUploadResult.error,
-      });
-      showNotification({
-        title: `${state.name} 移动失败`,
-        message: err,
-        color: "red",
-      });
-      await sleep(3000);
-      FileUploadListState.list = FileUploadListState.list.filter(
-        (item) => item.key !== state.key
-      );
-    }
   });
 };

@@ -1,4 +1,4 @@
-import { useHandleInput, useMinWidth } from "@/hooks/util";
+import { useMinWidth } from "@/hooks/util";
 import { fetchDeleteFile, getFileUrl, join } from "@/interface/file/tencent";
 import {
   DeepReadonly,
@@ -7,11 +7,11 @@ import {
   isImg,
   isVideo,
 } from "@/util/util";
-import { Button, Image, Input, List, Modal } from "@mantine/core";
+import { Button, Image, List, Modal } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Prism } from "@mantine/prism";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { FileListState, moveFile, TreeItem } from "./fileState";
+import React, { useCallback, useMemo, useState } from "react";
+import { FileListState, TreeItem } from "./fileState";
 
 const { Item } = List;
 
@@ -21,11 +21,6 @@ const FileDetailModal: React.FC<{
   item?: DeepReadonly<TreeItem>;
 }> = ({ open, onClose, item }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [filePath, setFilePath] = useState("");
-  const onChangeFilePath = useHandleInput(setFilePath);
-  useEffect(() => {
-    setFilePath(item?.path || "");
-  }, [item?.path, setFilePath]);
   const handleDelete = useCallback(async () => {
     if (!item) return;
     setIsLoading(true);
@@ -53,12 +48,6 @@ const FileDetailModal: React.FC<{
     return getFileUrl(item);
   }, [item]);
 
-  const handleRename = useCallback(async () => {
-    if (!item) return;
-    moveFile(item, filePath);
-    onClose();
-  }, [filePath, item, onClose]);
-
   return (
     <Modal
       opened={open}
@@ -80,18 +69,6 @@ const FileDetailModal: React.FC<{
           <Item>文件类型：{getFileExtensionName(item.name)}</Item>
         </List>
       ) : null}
-      <p className="mb-1">移动到</p>
-      <div className="flex gap-2 mb-4">
-        <Input
-          value={filePath}
-          onChange={onChangeFilePath}
-          className="flex-grow"
-          disabled={isLoading}
-        />
-        <Button color="grape" onClick={handleRename} loading={isLoading}>
-          确定
-        </Button>
-      </div>
       <Button color="red" onClick={handleDelete} loading={isLoading}>
         删除
       </Button>
