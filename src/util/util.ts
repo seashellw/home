@@ -76,10 +76,6 @@ export const refreshPrism = () => {
   });
 };
 
-export const isDark = () => {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches;
-};
-
 export const sleep = (time: number) =>
   new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
