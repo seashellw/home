@@ -7,7 +7,7 @@ import {
 import {
   fetchFileUrlUpload,
   fetchFileUrlUploadStatus,
-} from "@/interface/file/urlUpload";
+} from "@/interface/file/url-upload";
 import { sleep } from "@/util/util";
 import { showNotification } from "@mantine/notifications";
 import { proxy } from "valtio";

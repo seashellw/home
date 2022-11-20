@@ -32,7 +32,7 @@ let cos = (async () => {
     );
     return undefined;
   }
-  let res = await fetch("/server/api/fileAuthorization").then((res) =>
+  let res = await fetch("/server/api/file-authorization").then((res) =>
     res.json()
   );
   Bucket.Bucket = res.Bucket;
@@ -40,7 +40,7 @@ let cos = (async () => {
   const COS = window?.COS;
   return new COS({
     getAuthorization: function (_: any, callback: any) {
-      fetch("/server/api/fileAuthorization")
+      fetch("/server/api/file-authorization")
         .then((res) => res.json())
         .then((res) => {
           let tempKeys = res?.tempKeys;

@@ -6,7 +6,7 @@ import { useRequest } from "ahooks";
 import React, { Suspense, useEffect } from "react";
 import { useSnapshot } from "valtio";
 import Icon from "../util/Icon";
-import { FileFormDataState, FileListState } from "./fileState";
+import { FileFormDataState, FileListState } from "./file-state";
 
 const AddDialog = React.lazy(() => import("./AddDialog"));
 

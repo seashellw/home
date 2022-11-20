@@ -11,10 +11,9 @@ export interface UserItem {
 }
 
 export const fetchUser = async () => {
-  const res = await get<{
+  return await get<{
     user: UserItem;
   }>({ path: "/user" });
-  return res;
 };
 
 export const fetchLogIn = async (path: string) => {

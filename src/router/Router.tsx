@@ -15,8 +15,8 @@ const router = createBrowserRouter(
           element: h(() => import("@/pages/home/Home")),
         },
         {
-          path: "/fileSystem",
-          element: h(() => import("@/pages/fileSystem/FileSystem")),
+          path: "/file-system",
+          element: h(() => import("@/pages/file-system/FileSystem")),
         },
       ],
     },
@@ -40,7 +40,7 @@ export const menu: MenuItem[] = [
   },
   {
     title: "文件系统",
-    path: "/fileSystem",
+    path: "/file-system",
     icon: <i className="ti ti-brand-google-drive"></i>,
   },
 ];

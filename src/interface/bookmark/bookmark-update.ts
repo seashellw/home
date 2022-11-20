@@ -8,6 +8,6 @@ export interface BookmarkUpdateRequest {
 
 export const fetchBookmarkUpdate = (req: BookmarkUpdateRequest) =>
   post<{}, BookmarkUpdateRequest>({
-    path: "/bookmarkUpdate",
+    path: "/bookmark-update",
     body: req,
   });

@@ -8,6 +8,6 @@ export interface BookmarkDeleteResponse {}
 
 export const fetchBookmarkDelete = (req: BookmarkDeleteRequest) =>
   post<BookmarkDeleteResponse, BookmarkDeleteRequest>({
-    path: "/bookmarkDelete",
+    path: "/bookmark-delete",
     body: req,
   });

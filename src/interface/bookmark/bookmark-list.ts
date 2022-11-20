@@ -11,5 +11,5 @@ export interface BookmarkListResponse {
 
 export const fetchBookmarkList = () =>
   get<BookmarkListResponse>({
-    path: "/bookmarkList",
+    path: "/bookmark-list",
   });

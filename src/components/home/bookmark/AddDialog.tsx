@@ -2,12 +2,12 @@ import { useStateForm } from "@/hooks/util";
 import { Button, Modal, TextInput } from "@mantine/core";
 import React, { useCallback, useState } from "react";
 import { useSnapshot } from "valtio";
-import { ActionType, BookMarkState, useBookmarkAction } from "./bookmarkState";
+import { ActionType, BookmarkState, useBookmarkAction } from "./bookmark-state";
 
 const AddDialog: React.FC = () => {
   const { fetchAdd, fetchUpdate, fetchDelete } = useBookmarkAction();
 
-  const form = useStateForm(BookMarkState.item, {
+  const form = useStateForm(BookmarkState.item, {
     validate(values) {
       return {
         url: values.url ? undefined : "请输入URL",
@@ -16,11 +16,11 @@ const AddDialog: React.FC = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const { open, type } = useSnapshot(BookMarkState);
+  const { open, type } = useSnapshot(BookmarkState);
 
   const handleSave = form.onSubmit(async () => {
     setIsLoading(true);
-    switch (BookMarkState.type) {
+    switch (BookmarkState.type) {
       case ActionType.Add:
         await fetchAdd();
         break;
@@ -29,20 +29,20 @@ const AddDialog: React.FC = () => {
         break;
     }
     setIsLoading(false);
-    BookMarkState.open = false;
+    BookmarkState.open = false;
   });
 
   const handleDelete = useCallback(async () => {
     setIsLoading(true);
     await fetchDelete();
     setIsLoading(false);
-    BookMarkState.open = false;
+    BookmarkState.open = false;
   }, [fetchDelete]);
 
   return (
     <Modal
       opened={open}
-      onClose={() => (BookMarkState.open = false)}
+      onClose={() => (BookmarkState.open = false)}
       title={type === ActionType.Add ? "新增书签" : "编辑书签"}
       closeOnClickOutside={false}
     >

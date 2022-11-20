@@ -11,7 +11,7 @@ import { Button, Image, List, Modal } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Prism } from "@mantine/prism";
 import React, { useCallback, useMemo, useState } from "react";
-import { FileListState, TreeItem } from "./fileState";
+import { FileListState, TreeItem } from "./file-state";
 
 const { Item } = List;
 
