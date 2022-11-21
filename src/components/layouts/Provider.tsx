@@ -53,23 +53,6 @@ const Provider: React.FC<PropsWithChildren> = ({ children }) => {
         withNormalizeCSS
         withCSSVariables
         theme={{
-          globalStyles: () => ({
-            "*": {
-              scrollBehavior: "smooth",
-            },
-            "[data-radix-scroll-area-viewport]": {
-              scrollBehavior: "auto",
-            },
-            ".mantine-ScrollArea-viewport": {
-              scrollBehavior: "auto",
-            },
-            ".ti": {
-              transform: "scale(1.2)",
-            },
-            ".mantine-Prism-code": {
-              fontFamily: "JetBrainsMono",
-            },
-          }),
           headings: {
             fontFamily: "inherit",
           },

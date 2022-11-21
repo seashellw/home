@@ -1,6 +1,7 @@
 import { useWatch } from "@/hooks/util";
 import { menu } from "@/router/Router";
 import { Divider, Global, Navbar, NavLink, ScrollArea } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import React, { Suspense } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { proxy, useSnapshot } from "valtio";
@@ -29,6 +30,8 @@ const AppNavbar: React.FC = () => {
     NavbarState.open = false;
   });
 
+  const { height } = useViewportSize();
+
   return (
     <>
       <Navbar
@@ -36,6 +39,7 @@ const AppNavbar: React.FC = () => {
         hiddenBreakpoint="sm"
         hidden={!isOpen}
         width={{ sm: 200, lg: 300 }}
+        height={height - headerHeight}
         fixed
       >
         <Section grow component={ScrollArea}>
@@ -66,6 +70,7 @@ const AppNavbar: React.FC = () => {
         styles={(theme) => ({
           "#root": {
             paddingTop: headerHeight,
+            paddingBottom: 60,
           },
           [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
             "#root": {

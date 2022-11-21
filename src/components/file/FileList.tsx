@@ -10,7 +10,7 @@ import {
   FileTreeState,
   getTreeFromList,
   TreeItem,
-} from "./fileState";
+} from "./file-state";
 
 const FileDetailModal = React.lazy(() => import("./FileDetailModal"));
 

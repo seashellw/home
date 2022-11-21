@@ -1,8 +1,8 @@
 import { LogInState } from "@/hooks/user";
-import { fetchBookmarkCreate } from "@/interface/bookmark/bookmarkCreate";
-import { fetchBookmarkDelete } from "@/interface/bookmark/bookmarkDelete";
-import { fetchBookmarkList } from "@/interface/bookmark/bookmarkList";
-import { fetchBookmarkUpdate } from "@/interface/bookmark/bookmarkUpdate";
+import { fetchBookmarkCreate } from "@/interface/bookmark/bookmark-create";
+import { fetchBookmarkDelete } from "@/interface/bookmark/bookmark-delete";
+import { fetchBookmarkList } from "@/interface/bookmark/bookmark-list";
+import { fetchBookmarkUpdate } from "@/interface/bookmark/bookmark-update";
 import { showNotification } from "@mantine/notifications";
 import { useRequest } from "ahooks";
 import { useCallback, useMemo } from "react";
@@ -13,7 +13,7 @@ export const enum ActionType {
   Edit,
 }
 
-export const BookMarkState = proxy<{
+export const BookmarkState = proxy<{
   open: boolean;
   type: ActionType;
   item: BookmarkItem;
@@ -69,7 +69,7 @@ export const useBookmarkAction = () => {
    * 发起删除书签的请求
    */
   const fetchDelete = useCallback(async () => {
-    const { item } = BookMarkState;
+    const { item } = BookmarkState;
     if (!item?.id) {
       return;
     }
@@ -95,7 +95,7 @@ export const useBookmarkAction = () => {
    * 发起更新书签的请求
    */
   const fetchUpdate = useCallback(async () => {
-    const { item } = BookMarkState;
+    const { item } = BookmarkState;
     if (!item?.id) {
       return;
     }
@@ -119,7 +119,7 @@ export const useBookmarkAction = () => {
    * 发起添加书签的请求
    */
   const fetchAdd = useCallback(async () => {
-    const { item } = BookMarkState;
+    const { item } = BookmarkState;
     if (!item?.url) {
       return;
     }

@@ -11,7 +11,7 @@ import {
 import { useToggle } from "ahooks";
 import React, { useCallback, useMemo } from "react";
 import { useSnapshot } from "valtio";
-import { FileUploadListState, FileUploadResult } from "./fileState";
+import { FileUploadListState, FileUploadResult } from "./file-state";
 
 const UploadProgress: React.FC = () => {
   const { list } = useSnapshot(FileUploadListState);

@@ -32,7 +32,7 @@ let cos = (async () => {
     );
     return undefined;
   }
-  let res = await fetch("/server/api/fileAuthorization").then((res) =>
+  let res = await fetch("/server/api/file-authorization").then((res) =>
     res.json()
   );
   Bucket.Bucket = res.Bucket;
@@ -40,7 +40,7 @@ let cos = (async () => {
   const COS = window?.COS;
   return new COS({
     getAuthorization: function (_: any, callback: any) {
-      fetch("/server/api/fileAuthorization")
+      fetch("/server/api/file-authorization")
         .then((res) => res.json())
         .then((res) => {
           let tempKeys = res?.tempKeys;
@@ -185,50 +185,6 @@ export const fetchDeleteFile = (key: string) =>
             return;
           }
           resolve("");
-        }
-      );
-    });
-  });
-
-export const fetchRenameFile = (
-  oldKey: string,
-  newKey: string,
-  onProgress: (progressData: ProgressInfo) => void
-) =>
-  new Promise<string>((resolve) => {
-    getCOS().then((cos) => {
-      oldKey = encodeKey(oldKey);
-      newKey = encodeKey(newKey);
-      cos.sliceCopyFile(
-        {
-          Bucket: Bucket.Bucket,
-          Region: Bucket.Region,
-          Key: newKey,
-          CopySource: `${Bucket.Bucket}.cos.${Bucket.Region}.myqcloud.com/${oldKey}`,
-          onProgress: onProgress,
-        },
-        function (err: any) {
-          if (err) {
-            console.error(err);
-            resolve(JSON.stringify(err));
-            return;
-          }
-          cos.deleteObject(
-            {
-              Bucket: Bucket.Bucket,
-              Region: Bucket.Region,
-              Key: oldKey,
-            },
-            function (err: any) {
-              if (err) {
-                console.error(err);
-                resolve(JSON.stringify(err));
-                return;
-              } else {
-                resolve("");
-              }
-            }
-          );
         }
       );
     });

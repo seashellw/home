@@ -16,7 +16,7 @@ import {
   getName,
   uploadFromUrl,
   uploadMore,
-} from "./fileState";
+} from "./file-state";
 
 const UploadProgress = React.lazy(() => import("./UploadProgress"));
 

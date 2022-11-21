@@ -7,8 +7,8 @@ import {
   ActionType,
   BookmarkItem,
   BookMarkListState,
-  BookMarkState,
-} from "./bookmarkState";
+  BookmarkState,
+} from "./bookmark-state";
 
 const AddDialog = React.lazy(() => import("./AddDialog"));
 
@@ -24,9 +24,9 @@ const ButtonItem: React.FC<{
       key={item.id}
       onContextMenu={(e: React.MouseEvent) => {
         e.preventDefault();
-        BookMarkState.open = true;
-        BookMarkState.type = ActionType.Edit;
-        BookMarkState.item = item;
+        BookmarkState.open = true;
+        BookmarkState.type = ActionType.Edit;
+        BookmarkState.item = item;
       }}
     >
       {item.title}
@@ -36,9 +36,9 @@ const ButtonItem: React.FC<{
 
 const Bookmark: React.FC = () => {
   const handleAdd = useCallback(() => {
-    BookMarkState.open = true;
-    BookMarkState.type = ActionType.Add;
-    BookMarkState.item = {
+    BookmarkState.open = true;
+    BookmarkState.type = ActionType.Add;
+    BookmarkState.item = {
       title: "",
       url: "",
       id: "",

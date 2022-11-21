@@ -21,7 +21,7 @@ export const fetchFileUrlUpload = async (
     key: encodeKey(req.key),
   };
   return post<{}, typeof req>({
-    path: "/fileUrlUpload",
+    path: "/file-url-upload",
     body: req,
   });
 };
@@ -34,7 +34,7 @@ export const fetchFileUrlUploadStatus = async (
     key: encodeKey(req.key),
   };
   let res = await post<FileUrlUploadResponse, typeof req>({
-    path: "/fileUrlUpload",
+    path: "/file-url-upload",
     body: req,
   });
   if (res.data) {

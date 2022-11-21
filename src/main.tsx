@@ -1,6 +1,6 @@
 import { StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
-import "uno.css";
+import "./style/index.css";
 import Router from "./router/Router";
 
 const rootElement = document.getElementById("root");

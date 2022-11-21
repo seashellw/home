@@ -1,5 +1,5 @@
 import { useInputValue } from "@/hooks/util";
-import { fetchToolsFormat } from "@/interface/tool/toolsFormat";
+import { fetchToolsFormat } from "@/interface/tool/tools-format";
 import { Alert, Card, Radio, Textarea, Title } from "@mantine/core";
 import { Prism, PrismProps } from "@mantine/prism";
 import { useRequest } from "ahooks";

@@ -7,6 +7,6 @@ export interface BookmarkCreateRequest {
 
 export const fetchBookmarkCreate = (req: BookmarkCreateRequest) =>
   post<{}, BookmarkCreateRequest>({
-    path: "/bookmarkCreate",
+    path: "/bookmark-create",
     body: req,
   });

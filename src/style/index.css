@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+
+[data-radix-scroll-area-viewport] {
+  scroll-behavior: auto;
+}
+
+.mantine-ScrollArea-viewport {
+  scroll-behavior: auto;
+}
+
+.ti {
+  transform: scale(1.2);
+}
+
+.mantine-Prism-code {
+  font-family: JetBrainsMono;
+}
