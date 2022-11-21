@@ -24,7 +24,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/server": "https://seashellw.world",
+      "/server": "https://app.seashellw.world",
     },
   },
 });
