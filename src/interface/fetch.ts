@@ -42,7 +42,7 @@ export const fetch: <Response = any>(option: {
       code: err.response?.status || 0,
       ok: false,
       data: undefined,
-      message: err.data,
+      message: err.data instanceof Object ? JSON.stringify(err.data) : err.data,
     };
   }
 };
