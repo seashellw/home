@@ -9,8 +9,8 @@ import { showNotification } from "@mantine/notifications";
 import { proxy } from "valtio";
 import { useOnMount, useStorageStore } from "./util";
 
-const logInURL = "https://app.seashellw.world/server/api/auth/logIn";
-const logOutURL = "https://app.seashellw.world/server/api/auth/logOut";
+const logInURL = "https://app.seashellw.world/server/api/auth/login";
+const logOutURL = "https://app.seashellw.world/server/api/auth/logout";
 
 /**
  * 登录状态
