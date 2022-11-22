@@ -165,7 +165,7 @@ export const fetchFileList = (space?: string) =>
   });
 
 export const getFileUrl = (item: { space: string; path: string }) =>
-  `https://seashellw.world/server/api/file/${encodeKey(
+  `https://app.seashellw.world/server/api/file/${encodeKey(
     join(item.space, item.path)
   )}`;
 
