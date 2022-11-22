@@ -3,7 +3,7 @@ import {
   fetchLogOut,
   fetchUser,
   UserItem,
-} from "@/interface/user/user";
+} from "@/interface/user";
 import { TOKEN_KEY } from "@/interface/util";
 import { showNotification } from "@mantine/notifications";
 import { proxy } from "valtio";

@@ -1,5 +1,5 @@
-import { get } from "../fetch";
-import { TOKEN_KEY } from "../util";
+import { get } from "./fetch";
+import { TOKEN_KEY } from "./util";
 
 export interface UserItem {
   [key: string]: string | undefined;
