@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
-import React, { Suspense } from "react";
+import React from "react";
 import Icon from "../util/Icon";
 import {
   FileFormDataState,
@@ -17,8 +17,6 @@ import {
   uploadFromUrl,
   uploadMore,
 } from "./file-state";
-
-const UploadProgress = React.lazy(() => import("./UploadProgress"));
 
 const SegmentedControlData = [
   { value: "upload", label: "本地上传" },
@@ -107,62 +105,57 @@ const AddDialog: React.FC<{
 
   const { type } = form.values;
   return (
-    <>
-      <Modal
-        opened={open}
-        onClose={onClose}
-        title="上传文件"
-        closeOnClickOutside={false}
-      >
-        <form onSubmit={handleSave}>
-          <SegmentedControl
-            data={SegmentedControlData}
-            value={type}
-            onChange={(value) => form.setFieldValue("type", value)}
-            mb="xs"
-          />
-          <TextInput
-            label="命名空间"
-            {...form.getInputProps("space")}
-            mb="sm"
+    <Modal
+      opened={open}
+      onClose={onClose}
+      title="上传文件"
+      closeOnClickOutside={false}
+    >
+      <form onSubmit={handleSave}>
+        <SegmentedControl
+          data={SegmentedControlData}
+          value={type}
+          onChange={(value) => form.setFieldValue("type", value)}
+          mb="xs"
+        />
+        <TextInput
+          label="命名空间"
+          {...form.getInputProps("space")}
+          mb="sm"
+          withAsterisk
+        />
+        <TextInput label="路径" {...form.getInputProps("path")} mb="sm" />
+        {type === "upload" ? (
+          <FileInput
+            label="文件"
+            placeholder="请选择"
+            mb="md"
             withAsterisk
+            value={form.values.fileList}
+            onChange={(value) => form.setFieldValue("fileList", value)}
+            error={form.errors.fileList}
+            multiple
+            icon={<Icon icon="upload" className="relative -top-[2px]" />}
           />
-          <TextInput label="路径" {...form.getInputProps("path")} mb="sm" />
-          {type === "upload" ? (
-            <FileInput
-              label="文件"
-              placeholder="请选择"
-              mb="md"
-              withAsterisk
-              value={form.values.fileList}
-              onChange={(value) => form.setFieldValue("fileList", value)}
-              error={form.errors.fileList}
-              multiple
-              icon={<Icon icon="upload" className="relative -top-[2px]" />}
-            />
-          ) : null}
-          {type === "url" ? (
-            <TextInput
-              label="URL"
-              mb="md"
-              withAsterisk
-              autoFocus
-              {...form.getInputProps("url")}
-            />
-          ) : null}
-          <Button
-            variant="filled"
-            leftIcon={<Icon icon="checks" />}
-            type="submit"
-          >
-            上传
-          </Button>
-        </form>
-      </Modal>
-      <Suspense>
-        <UploadProgress />
-      </Suspense>
-    </>
+        ) : null}
+        {type === "url" ? (
+          <TextInput
+            label="URL"
+            mb="md"
+            withAsterisk
+            autoFocus
+            {...form.getInputProps("url")}
+          />
+        ) : null}
+        <Button
+          variant="filled"
+          leftIcon={<Icon icon="checks" />}
+          type="submit"
+        >
+          上传
+        </Button>
+      </form>
+    </Modal>
   );
 };
 
