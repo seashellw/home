@@ -1,7 +1,6 @@
 import AppHeader from "@/components/layouts/AppHeader";
 import AppNavbar from "@/components/layouts/AppNavbar";
 import Provider from "@/components/layouts/Provider";
-import NavigationProgress from "@/components/util/NavigationProgress";
 import { useAutoLogIn } from "@/hooks/user";
 import React, { Suspense } from "react";
 import { Outlet } from "react-router-dom";
@@ -13,7 +12,7 @@ function App() {
     <Provider>
       <AppHeader />
       <AppNavbar />
-      <Suspense fallback={<NavigationProgress />}>
+      <Suspense>
         <Outlet />
       </Suspense>
     </Provider>
