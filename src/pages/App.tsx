@@ -5,6 +5,8 @@ import { useAutoLogIn } from "@/hooks/user";
 import React, { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 
+const AppFooter = React.lazy(() => import("@/components/layouts/AppFooter"));
+
 function App() {
   useAutoLogIn();
 
@@ -14,6 +16,7 @@ function App() {
       <AppNavbar />
       <Suspense>
         <Outlet />
+        <AppFooter />
       </Suspense>
     </Provider>
   );

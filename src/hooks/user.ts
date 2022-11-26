@@ -1,9 +1,4 @@
-import {
-  fetchLogIn,
-  fetchLogOut,
-  fetchUser,
-  UserItem,
-} from "@/interface/user";
+import { fetchLogIn, fetchLogOut, fetchUser, UserItem } from "@/interface/user";
 import { TOKEN_KEY } from "@/interface/util";
 import { showNotification } from "@mantine/notifications";
 import { proxy } from "valtio";

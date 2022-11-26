@@ -7,7 +7,7 @@ const Format = React.lazy(() => import("@/components/home/Format"));
 
 const Home: React.FC = () => {
   return (
-    <>
+    <main className="app-main">
       <Bookmark />
       <Suspense fallback={<Skeleton my="md" height={150} radius="sm" />}>
         <Format />
@@ -15,7 +15,7 @@ const Home: React.FC = () => {
       <p className="text-center my-10">
         <ShiCi />
       </p>
-    </>
+    </main>
   );
 };
 

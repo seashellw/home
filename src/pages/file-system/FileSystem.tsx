@@ -8,13 +8,13 @@ const UploadProgress = React.lazy(
 
 const FileSystem: React.FC = () => {
   return (
-    <>
+    <main className="app-main">
       <SearchForm />
       <FileList />
       <Suspense>
         <UploadProgress />
       </Suspense>
-    </>
+    </main>
   );
 };
 

@@ -70,7 +70,10 @@ const AppNavbar: React.FC = () => {
         styles={(theme) => ({
           "#root": {
             paddingTop: headerHeight,
-            paddingBottom: 60,
+            paddingBottom: 10,
+          },
+          ".app-main": {
+            minHeight: height - headerHeight,
           },
           [`@media (min-width: ${theme.breakpoints.sm}px)`]: {
             "#root": {

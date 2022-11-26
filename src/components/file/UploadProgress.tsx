@@ -59,7 +59,7 @@ const UploadProgress: React.FC = () => {
       {!inViewport ? (
         <Portal>
           <Badge className="fixed bottom-5 left-1/2 -translate-x-1/2">
-          {`进行中 ${list.length}`}
+            {`进行中 ${list.length}`}
           </Badge>
         </Portal>
       ) : null}

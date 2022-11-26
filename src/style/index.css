@@ -21,3 +21,9 @@
 .mantine-Prism-code {
   font-family: JetBrainsMono;
 }
+
+:root {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
