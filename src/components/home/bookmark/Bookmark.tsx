@@ -1,3 +1,4 @@
+import Icon from "@/components/util/Icon";
 import { LogInState } from "@/hooks/user";
 import { useStorageStore } from "@/hooks/util";
 import { ActionIcon, Button, Group } from "@mantine/core";
@@ -58,7 +59,7 @@ const Bookmark: React.FC = () => {
         <ButtonItem key={item.id} item={item} />
       ))}
       <ActionIcon onClick={handleAdd} title="添加书签" variant="light">
-        <i className="ti ti-circle-plus"></i>
+        <Icon icon="circle-plus"/>
       </ActionIcon>
       <Suspense>
         <AddDialog />

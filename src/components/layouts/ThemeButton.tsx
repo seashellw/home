@@ -7,6 +7,7 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import React, { useCallback } from "react";
+import Icon from "../util/Icon";
 
 const ThemeButton: React.FC = () => {
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
@@ -31,7 +32,7 @@ const ThemeButton: React.FC = () => {
           value: "light",
           label: (
             <Center>
-              <i className="ti ti-sun"></i>
+              <Icon icon="sun" />
               <Box ml={10}>Light</Box>
             </Center>
           ),
@@ -40,7 +41,7 @@ const ThemeButton: React.FC = () => {
           value: "dark",
           label: (
             <Center>
-              <i className="ti ti-moon"></i>
+              <Icon icon="moon" />
               <Box ml={10}>Dark</Box>
             </Center>
           ),

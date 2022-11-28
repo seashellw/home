@@ -1,3 +1,4 @@
+import Icon from "@/components/util/Icon";
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -36,11 +37,11 @@ export const menu: MenuItem[] = [
   {
     title: "主页",
     path: "/",
-    icon: <i className="ti ti-armchair"></i>,
+    icon: <Icon icon="armchair" />,
   },
   {
     title: "文件系统",
     path: "/file-system",
-    icon: <i className="ti ti-brand-google-drive"></i>,
+    icon: <Icon icon="brand-google-drive" />,
   },
 ];

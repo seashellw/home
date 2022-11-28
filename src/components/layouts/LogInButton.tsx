@@ -2,6 +2,7 @@ import { logIn, LogInState, logOut } from "@/hooks/user";
 import { ActionIcon, Avatar, Menu } from "@mantine/core";
 import React, { useCallback } from "react";
 import { useSnapshot } from "valtio";
+import Icon from "../util/Icon";
 import { headerIconHeight } from "./AppHeader";
 
 const { Dropdown, Item, Divider } = Menu;
@@ -18,7 +19,7 @@ const LogInButton: React.FC = () => {
   if (!isLogIn) {
     return (
       <ActionIcon variant="default" onClick={logIn} size={headerIconHeight}>
-        <i className="ti ti-brand-github"></i>
+        <Icon icon="brand-github" />
       </ActionIcon>
     );
   }
@@ -29,14 +30,11 @@ const LogInButton: React.FC = () => {
         <Avatar src={user?.image} size={headerIconHeight} />
       </Target>
       <Dropdown>
-        <Item
-          onClick={handleGitHub}
-          icon={<i className="ti ti-brand-github"></i>}
-        >
+        <Item onClick={handleGitHub} icon={<Icon icon="brand-github"></Icon>}>
           {user?.name}
         </Item>
         <Divider />
-        <Item onClick={logOut} icon={<i className="ti ti-logout"></i>}>
+        <Item onClick={logOut} icon={<Icon icon="logout" />}>
           退出登录
         </Item>
       </Dropdown>
