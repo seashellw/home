@@ -12,7 +12,14 @@ const Icon: React.FC<{
     <Box
       component="i"
       className={`ti ti-${icon} ${className}`}
-      sx={{ fontSize: size, color: color, ...sx }}
+      sx={{
+        fontSize: size,
+        color: color,
+        display: "inline-block",
+        verticalAlign: "middle",
+        transform: "scale(1.2)",
+        ...sx,
+      }}
     ></Box>
   );
 };

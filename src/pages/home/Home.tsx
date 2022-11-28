@@ -3,14 +3,14 @@ import ShiCi from "@/components/util/ShiCi";
 import { Skeleton } from "@mantine/core";
 import React, { Suspense } from "react";
 
-const Format = React.lazy(() => import("@/components/home/Format"));
+const JsonFormat = React.lazy(() => import("@/components/home/JsonFormat"));
 
 const Home: React.FC = () => {
   return (
     <main className="app-main">
       <Bookmark />
       <Suspense fallback={<Skeleton my="md" height={150} radius="sm" />}>
-        <Format />
+        <JsonFormat />
       </Suspense>
       <p className="text-center my-10">
         <ShiCi />

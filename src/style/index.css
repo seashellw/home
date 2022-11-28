@@ -14,10 +14,6 @@
   scroll-behavior: auto;
 }
 
-.ti {
-  transform: scale(1.2);
-}
-
 .mantine-Prism-code {
   font-family: JetBrainsMono;
 }
