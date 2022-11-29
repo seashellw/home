@@ -13,4 +13,4 @@ RUN pnpm run build
 
 FROM alpine AS runner
 WORKDIR /root
-COPY --from=builder /root/dist ./dist
+COPY --from=builder /root/dist/* ./dist

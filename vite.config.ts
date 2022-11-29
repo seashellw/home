@@ -6,9 +6,6 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [react()],
   base: "/home/",
-  build: {
-    outDir: "./dist/home",
-  },
   resolve: {
     // 配置路径别名
     alias: {
