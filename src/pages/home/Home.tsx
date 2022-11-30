@@ -4,6 +4,7 @@ import { Skeleton } from "@mantine/core";
 import React, { Suspense } from "react";
 
 const JsonFormat = React.lazy(() => import("@/components/home/JsonFormat"));
+const TopSearch = React.lazy(() => import("@/components/home/TopSearch"));
 
 const Home: React.FC = () => {
   return (
@@ -15,6 +16,9 @@ const Home: React.FC = () => {
       <p className="text-center my-10">
         <ShiCi />
       </p>
+      <Suspense fallback={<Skeleton my="md" height={200} radius="sm" />}>
+        <TopSearch />
+      </Suspense>
     </main>
   );
 };

@@ -1,8 +1,7 @@
 import { TOKEN_KEY } from "@/interface/util";
 import { FetchError, ofetch, SearchParameters } from "ofetch";
 
-const { origin } = window.location;
-export const HOST = origin + "/server/api";
+export const HOST = "https://app.seashellw.world/server/api";
 
 export type FetchResponse<T = any> = {
   code: number;
