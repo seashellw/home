@@ -26,6 +26,7 @@
     "date-fns": "^2.29.3",
     "destr": "^1.2.1",
     "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-config-react-app": "^7.0.1",
     "framer-motion": "^6.5.1",
     "lodash-es": "^4.17.21",
@@ -41,7 +42,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app"
+      "react-app",
+      "prettier"
     ]
   }
 }
