@@ -3,11 +3,11 @@ import {
   FileItem,
   join,
   ProgressInfo,
-} from "@/interface/file/tencent";
+} from "@/http/file/tencent";
 import {
   fetchFileUrlUpload,
   fetchFileUrlUploadStatus,
-} from "@/interface/file/url-upload";
+} from "@/http/file/url-upload";
 import { sleep } from "@/util/util";
 import { showNotification } from "@mantine/notifications";
 import { proxy } from "valtio";

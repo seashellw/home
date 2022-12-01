@@ -1,4 +1,5 @@
 import { parseISO } from "date-fns";
+import { HOST } from "@/http/fetch";
 
 export interface FileItem {
   space: string;
@@ -25,6 +26,8 @@ export const checkCOS = () => {
   return !!window?.COS;
 };
 
+const AUTH_URL = HOST + "/file-authorization";
+
 let cos = (async () => {
   if (!checkCOS()) {
     console.error(
@@ -32,15 +35,13 @@ let cos = (async () => {
     );
     return undefined;
   }
-  let res = await fetch("/server/api/file-authorization").then((res) =>
-    res.json()
-  );
+  let res = await fetch(AUTH_URL).then((res) => res.json());
   Bucket.Bucket = res.Bucket;
   Bucket.Region = res.Region;
   const COS = window?.COS;
   return new COS({
     getAuthorization: function (_: any, callback: any) {
-      fetch("/server/api/file-authorization")
+      fetch(AUTH_URL)
         .then((res) => res.json())
         .then((res) => {
           let tempKeys = res?.tempKeys;

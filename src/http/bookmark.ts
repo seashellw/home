@@ -1,4 +1,4 @@
-import { get, post } from "@/interface/fetch";
+import { get, post } from "@/http/fetch";
 
 export interface BookmarkCreateRequest {
   url?: string;

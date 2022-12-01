@@ -1,4 +1,4 @@
-import { fetchTopSearch } from "@/interface/tool/top-search";
+import { fetchTopSearch } from "@/http/tool/top-search";
 import { formatSizeNumber } from "@/util/util";
 import { Anchor, Badge, Card, Skeleton } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";

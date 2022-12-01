@@ -1,5 +1,5 @@
 import { useOpen } from "@/hooks/util";
-import { getFileUrl } from "@/interface/file/tencent";
+import { getFileUrl } from "@/http/file/tencent";
 import { DeepReadonly } from "@/util/util";
 import { ActionIcon, Anchor, Box, BoxProps } from "@mantine/core";
 import React, { Suspense, useCallback, useEffect, useState } from "react";

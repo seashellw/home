@@ -5,6 +5,7 @@ RUN npm install -g pnpm
 
 COPY ./package.json ./
 COPY ./.npmrc ./
+COPY ./.env ./
 RUN pnpm install
 
 COPY . ./

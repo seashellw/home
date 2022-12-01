@@ -1,5 +1,5 @@
 import { useWatch } from "@/hooks/util";
-import { join } from "@/interface/file/tencent";
+import { join } from "@/http/file/tencent";
 import {
   Button,
   FileInput,

@@ -4,11 +4,11 @@ import {
   fetchUser,
   TOKEN_KEY,
   UserItem,
-} from "@/interface/user";
+} from "@/http/user";
 import { showNotification } from "@mantine/notifications";
 import { proxy } from "valtio";
 import { useOnMount, useStorageStore } from "./util";
-import { LOGIN_URL, LOGOUT_URL } from "@/interface/fetch";
+import { LOGIN_URL, LOGOUT_URL } from "@/http/fetch";
 
 /**
  * 登录状态

@@ -1,9 +1,9 @@
 import { FetchError, ofetch, SearchParameters } from "ofetch";
-import { TOKEN_KEY } from "@/interface/user";
+import { TOKEN_KEY } from "@/http/user";
 
-export const HOST = "https://app.seashellw.world/server/api";
-export const LOGIN_URL = "https://app.seashellw.world/server/api/auth/login";
-export const LOGOUT_URL = "https://app.seashellw.world/server/api/auth/logout";
+export const HOST = import.meta.env.VITE_HOST;
+export const LOGIN_URL = HOST + "/auth/login";
+export const LOGOUT_URL = HOST + "/auth/logout";
 
 export type FetchResponse<T = any> = {
   code: number;

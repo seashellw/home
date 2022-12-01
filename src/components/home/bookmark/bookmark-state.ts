@@ -8,7 +8,7 @@ import {
   fetchBookmarkDelete,
   fetchBookmarkList,
   fetchBookmarkUpdate,
-} from "@/interface/bookmark";
+} from "@/http/bookmark";
 
 export const enum ActionType {
   Add,
