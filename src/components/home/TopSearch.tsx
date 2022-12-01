@@ -19,6 +19,7 @@ const TopSearch: React.FC = () => {
     return res.data?.list.map((item) => ({
       ...item,
       hot: formatSizeNumber(item.hot),
+      url: `https://cn.bing.com/search?q=${decodeURIComponent(item.name)}`,
     }));
   });
   return (

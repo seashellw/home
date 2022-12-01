@@ -8,18 +8,22 @@ const TopSearch = React.lazy(() => import("@/components/home/TopSearch"));
 
 const Home: React.FC = () => {
   return (
-    <main className="app-main">
+    <>
       <Bookmark />
-      <Suspense fallback={<Skeleton my="md" height={150} radius="sm" />}>
+      <Suspense
+        fallback={<Skeleton m="md" width={"auto"} height={150} radius="sm" />}
+      >
         <JsonFormat />
       </Suspense>
       <p className="text-center my-10">
         <ShiCi />
       </p>
-      <Suspense fallback={<Skeleton my="md" height={200} radius="sm" />}>
+      <Suspense
+        fallback={<Skeleton m="md" width={"auto"} height={200} radius="sm" />}
+      >
         <TopSearch />
       </Suspense>
-    </main>
+    </>
   );
 };
 

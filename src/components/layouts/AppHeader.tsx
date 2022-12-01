@@ -19,7 +19,7 @@ const AppHeader: React.FC = () => {
   return (
     <Header
       height={headerHeight}
-      fixed
+      sx={{ position: "sticky", top: 0, zIndex: 10 }}
       className="flex items-center backdrop-blur dark:bg-[#1a1b1e52] bg-[#ffffff52]"
       p="sm"
     >
