@@ -15,7 +15,9 @@ const ShiCi: React.FC = () => {
       first.current = false;
     }
   });
-  return <span className="jinrishici-sentence">正在加载....</span>;
+  return (
+    <span className="jinrishici-sentence lan-she-ji-sans">正在加载....</span>
+  );
 };
 
 export default React.memo(ShiCi);

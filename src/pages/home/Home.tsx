@@ -15,7 +15,7 @@ const Home: React.FC = () => {
       >
         <JsonFormat />
       </Suspense>
-      <p className="text-center my-10">
+      <p className="text-center my-5 text-lg">
         <ShiCi />
       </p>
       <Suspense

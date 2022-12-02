@@ -55,6 +55,7 @@ const AppNavbar: React.FC = () => {
             to={item.path}
             key={item.path}
             active={pathname === item.path}
+            styles={{ label: { fontSize: 15 } }}
           />
         ))}
       </Section>
