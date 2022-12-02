@@ -1,4 +1,4 @@
-import AppHeader from "@/components/layouts/AppHeader";
+import AppHeader, { headerHeight } from "@/components/layouts/AppHeader";
 import AppNavbar from "@/components/layouts/AppNavbar";
 import Provider from "@/components/layouts/Provider";
 import { useAutoLogIn } from "@/hooks/user";
@@ -13,6 +13,13 @@ const AppNavbarFlex = styled(AppNavbar)`
   flex-shrink: 0;
 `;
 
+const Main = styled.main`
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  min-height: ${`calc(100vh - ${headerHeight}px)`};
+`;
+
 function App() {
   useAutoLogIn();
 
@@ -21,11 +28,11 @@ function App() {
       <AppHeader />
       <section className="flex">
         <AppNavbarFlex />
-        <main className="flex-grow flex-shrink overflow-hidden">
+        <Main>
           <Suspense>
             <Outlet />
           </Suspense>
-        </main>
+        </Main>
       </section>
       <footer>
         <Suspense>

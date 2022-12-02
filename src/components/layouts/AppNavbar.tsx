@@ -39,12 +39,14 @@ const AppNavbar: React.FC = () => {
       hidden={!isOpen}
       width={{ sm: 200, lg: 300 }}
       height={height - headerHeight}
-      sx={{
+      sx={(theme) => ({
         position: "sticky",
+        [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+          position: "fixed",
+        },
         top: headerHeight,
         zIndex: 9,
-        backgroundColor: "transparent",
-      }}
+      })}
     >
       <Section grow component={ScrollArea}>
         {menu.map((item) => (
