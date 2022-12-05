@@ -1,12 +1,14 @@
 import { LogInState } from "@/hooks/user";
-import { fetchBookmarkCreate } from "@/interface/bookmark/bookmark-create";
-import { fetchBookmarkDelete } from "@/interface/bookmark/bookmark-delete";
-import { fetchBookmarkList } from "@/interface/bookmark/bookmark-list";
-import { fetchBookmarkUpdate } from "@/interface/bookmark/bookmark-update";
 import { showNotification } from "@mantine/notifications";
 import { useRequest } from "ahooks";
 import { useCallback, useMemo } from "react";
 import { proxy, useSnapshot } from "valtio";
+import {
+  fetchBookmarkCreate,
+  fetchBookmarkDelete,
+  fetchBookmarkList,
+  fetchBookmarkUpdate,
+} from "@/http/bookmark";
 
 export const enum ActionType {
   Add,

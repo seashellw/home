@@ -1,8 +1,9 @@
-import { TOKEN_KEY } from "@/interface/util";
 import { FetchError, ofetch, SearchParameters } from "ofetch";
+import { TOKEN_KEY } from "@/http/user";
 
-const { origin } = window.location;
-export const HOST = origin + "/server/api";
+export const HOST = import.meta.env.VITE_HOST;
+export const LOGIN_URL = HOST + "/auth/login";
+export const LOGOUT_URL = HOST + "/auth/logout";
 
 export type FetchResponse<T = any> = {
   code: number;

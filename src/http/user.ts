@@ -1,8 +1,10 @@
 import { get } from "./fetch";
-import { TOKEN_KEY } from "./util";
+
+export const TOKEN_KEY = "token";
 
 export interface UserItem {
   [key: string]: string | undefined;
+
   id: string;
   image: string;
   name: string;

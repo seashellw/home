@@ -1,5 +1,5 @@
-import { post } from "@/interface/fetch";
-import { decodeKey, encodeKey, ProgressInfo } from "@/interface/file/tencent";
+import { post } from "@/http/fetch";
+import { decodeKey, encodeKey, ProgressInfo } from "@/http/file/tencent";
 
 export interface FileUrlUploadRequest {
   url?: string;

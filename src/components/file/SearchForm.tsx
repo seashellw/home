@@ -1,5 +1,5 @@
 import { useHandleInput, useOpen, useStorageStore } from "@/hooks/util";
-import { fetchFileList } from "@/interface/file/tencent";
+import { fetchFileList } from "@/http/file/tencent";
 import { ActionIcon, TextInput } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { useRequest } from "ahooks";

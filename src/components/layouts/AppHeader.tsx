@@ -19,7 +19,7 @@ const AppHeader: React.FC = () => {
   return (
     <Header
       height={headerHeight}
-      fixed
+      sx={{ position: "sticky", top: 0, zIndex: 10 }}
       className="flex items-center backdrop-blur dark:bg-[#1a1b1e52] bg-[#ffffff52]"
       p="sm"
     >
@@ -28,12 +28,11 @@ const AppHeader: React.FC = () => {
       </MediaQuery>
       <Title
         order={1}
-        size={17}
-        weight={700}
-        mr="sm"
+        size={20}
+        mx="sm"
         className="flex-grow flex items-center"
       >
-        <span className="truncate">大道之行也 天下为公</span>
+        <span className="truncate lan-she-ji-sans">大道之行也 天下为公</span>
       </Title>
       <Suspense>
         <LogInButton />

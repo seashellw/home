@@ -1,9 +1,9 @@
 /**
  * 分页
  */
-export abstract class Page {
-  current: number = 0; // 当前页码
-  pageSize: number = 0; // 每页的数量
+export interface Page {
+  current: number; // 当前页码
+  pageSize: number; // 每页的数量
   size?: number; // 当前页的数量
   total?: number; // 总记录数
   pages?: number; // 总页数

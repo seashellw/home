@@ -23,6 +23,7 @@ const ButtonItem: React.FC<{
       target="_blank"
       href={item.url}
       key={item.id}
+      uppercase
       onContextMenu={(e: React.MouseEvent) => {
         e.preventDefault();
         BookmarkState.open = true;
@@ -59,7 +60,7 @@ const Bookmark: React.FC = () => {
         <ButtonItem key={item.id} item={item} />
       ))}
       <ActionIcon onClick={handleAdd} title="添加书签" variant="light">
-        <Icon icon="circle-plus"/>
+        <Icon icon="circle-plus" />
       </ActionIcon>
       <Suspense>
         <AddDialog />

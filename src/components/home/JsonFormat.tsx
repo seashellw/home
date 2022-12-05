@@ -1,5 +1,5 @@
 import { useHandleInput } from "@/hooks/util";
-import { fetchToolsFormat } from "@/interface/tool/tools-format";
+import { fetchToolsFormat } from "@/http/tool/tools-format";
 import { Alert, Card, SegmentedControl, Textarea, Title } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 import React, { useCallback, useMemo, useState } from "react";

@@ -1,11 +1,14 @@
-import { fetchLogIn, fetchLogOut, fetchUser, UserItem } from "@/interface/user";
-import { TOKEN_KEY } from "@/interface/util";
+import {
+  fetchLogIn,
+  fetchLogOut,
+  fetchUser,
+  TOKEN_KEY,
+  UserItem,
+} from "@/http/user";
 import { showNotification } from "@mantine/notifications";
 import { proxy } from "valtio";
 import { useOnMount, useStorageStore } from "./util";
-
-const logInURL = "https://app.seashellw.world/server/api/auth/login";
-const logOutURL = "https://app.seashellw.world/server/api/auth/logout";
+import { LOGIN_URL, LOGOUT_URL } from "@/http/fetch";
 
 /**
  * 登录状态
@@ -17,12 +20,12 @@ export const LogInState = proxy<{
   isLogIn: false,
 });
 
-export const logIn = () => fetchLogIn(logInURL);
+export const logIn = () => fetchLogIn(LOGIN_URL);
 
 export const logOut = async () => {
   LogInState.isLogIn = false;
   LogInState.user = undefined;
-  await fetchLogOut(logOutURL);
+  await fetchLogOut(LOGOUT_URL);
 };
 
 export const useAutoLogIn = () => {

@@ -16,6 +16,14 @@ export function formatSize(size: number | string | undefined) {
   return window?.filesize?.(size) as string | undefined;
 }
 
+export const formatSizeNumber = (size: number | string | undefined) => {
+  let str = formatSize(size);
+  if (str?.endsWith("B")) {
+    str = str.slice(0, -1);
+  }
+  return str;
+};
+
 /**
  * 获取文件扩展名，不带点号
  */

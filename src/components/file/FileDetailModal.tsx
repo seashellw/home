@@ -1,5 +1,5 @@
 import { useMinWidth } from "@/hooks/util";
-import { fetchDeleteFile, getFileUrl, join } from "@/interface/file/tencent";
+import { fetchDeleteFile, getFileUrl, join } from "@/http/file/tencent";
 import {
   DeepReadonly,
   formatSize,
