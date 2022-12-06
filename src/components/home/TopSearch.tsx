@@ -2,11 +2,19 @@ import { fetchTopSearch } from "@/http/tool/top-search";
 import { formatSizeNumber } from "@/util/util";
 import { Anchor, Badge, Card, Skeleton } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
-import { useRequest } from "ahooks";
+import { useLocalStorageState, useRequest } from "ahooks";
 import React from "react";
 
 const TopSearch: React.FC = () => {
-  const { data, loading } = useRequest(async () => {
+  const [data, setData] = useLocalStorageState<
+    {
+      name: string;
+      hot: string;
+      url: string;
+    }[]
+  >("top-search", { defaultValue: [] });
+
+  const { loading } = useRequest(async () => {
     let res = await fetchTopSearch();
     if (!res.ok) {
       showNotification({
@@ -16,15 +24,17 @@ const TopSearch: React.FC = () => {
       });
       return;
     }
-    return res.data?.list.map((item) => ({
+    let data = res.data?.list.map((item) => ({
       ...item,
-      hot: formatSizeNumber(item.hot),
+      hot: formatSizeNumber(item.hot) || "",
       url: `https://cn.bing.com/search?q=${decodeURIComponent(item.name)}`,
     }));
+    if (!data) return;
+    setData(data);
   });
   return (
     <Card withBorder className="m-3 py-3 px-4">
-      {loading ? (
+      {loading && !data.length ? (
         new Array(18)
           .fill(0)
           .map((_, index) => (
