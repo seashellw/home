@@ -17,4 +17,10 @@ export default defineConfig({
       "/server": "https://app.seashellw.world",
     },
   },
+  build: {
+    sourcemap: true,
+  },
+  css: {
+    devSourcemap: true,
+  },
 });
