@@ -4,9 +4,10 @@ export interface TopSearchRequest {}
 
 export interface TopSearchResponse {
   list: {
-    name: string;
-    hot: number;
+    id: string;
+    title: number;
     url: string;
+    type: string;
   }[];
 }
 
