@@ -18,6 +18,9 @@
         color-scheme: light;
       }
     </style>
+  </head>
+  <body>
+    <div id="root"></div>
     <script type="module">
       (() => {
         let theme = localStorage.getItem("theme");
@@ -35,22 +38,19 @@
     <script type="module" src="./src/main.tsx" defer></script>
     <script
       src="https://cdn.seashellw.world/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"
-      async
+      defer
     ></script>
     <script
       src="https://cdn.seashellw.world/npm/filesize/lib/filesize.min.js"
-      async
+      defer
     ></script>
     <script
       src="https://cdn.seashellw.world/npm/canvas-confetti/dist/confetti.browser.min.js"
-      async
+      defer
     ></script>
     <script
       src="https://cdn.seashellw.world/npm/tesseract.js/dist/tesseract.min.js"
-      async
+      defer
     ></script>
-  </head>
-  <body>
-    <div id="root"></div>
   </body>
 </html>
