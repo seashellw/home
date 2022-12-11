@@ -22,18 +22,13 @@
   <body>
     <div id="root"></div>
     <script type="module">
-      (() => {
-        let theme = localStorage.getItem("theme");
-        if (theme === "dark" || theme === "light") {
-          document.documentElement.className = theme;
-          return;
-        }
+      let theme = localStorage.getItem("theme");
+      if (theme !== "dark" && theme !== "light")
         theme = window.matchMedia("(prefers-color-scheme: dark)").matches
           ? "dark"
           : "light";
-        document.documentElement.className = theme;
-        localStorage.setItem("theme", theme);
-      })();
+      document.documentElement.className = theme;
+      localStorage.setItem("theme", theme);
     </script>
     <script type="module" src="./src/main.tsx" defer></script>
     <script
