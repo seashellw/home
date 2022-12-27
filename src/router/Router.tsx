@@ -22,7 +22,6 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: "/home" }
 );
 
 export default React.memo(() => <RouterProvider router={router} />);
