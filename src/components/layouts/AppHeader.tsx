@@ -28,11 +28,12 @@ const AppHeader: React.FC = () => {
       </MediaQuery>
       <Title
         order={1}
-        size={20}
+        size={19}
+        weight={600}
         mx="sm"
         className="flex-grow flex items-center"
       >
-        <span className="truncate lan-she-ji-sans">大道之行也 天下为公</span>
+        <span className="truncate">大道之行也 天下为公</span>
       </Title>
       <Suspense>
         <LogInButton />

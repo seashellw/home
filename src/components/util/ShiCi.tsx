@@ -16,7 +16,7 @@ const ShiCi: React.FC = () => {
     }
   });
   return (
-    <span className="jinrishici-sentence lan-she-ji-sans">正在加载....</span>
+    <span className="jinrishici-sentence">正在加载....</span>
   );
 };
 

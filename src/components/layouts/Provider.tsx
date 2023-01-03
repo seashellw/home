@@ -56,7 +56,7 @@ const Provider: React.FC<PropsWithChildren> = ({ children }) => {
           headings: {
             fontFamily: "inherit",
           },
-          fontFamily: "MiSans",
+          fontFamily: "HarmonyOS_Sans_SC",
           colorScheme,
         }}
       >
